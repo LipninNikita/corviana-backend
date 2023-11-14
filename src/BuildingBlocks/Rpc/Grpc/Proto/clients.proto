@@ -1,0 +1,20 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "GrpcClients";
+
+service Clients {
+  rpc GetClientShortInfo(ClientShortInfoRequest) returns (ClientShortInfoResponse);
+}
+
+message ClientShortInfoRequest {
+	repeated string Ids = 1;
+}
+
+message ClientShortInfoResponse{
+	repeated ClientShortInfo shortInfos = 1;
+}
+
+message ClientShortInfo{
+	string Id = 1;
+	string FullName = 2;
+}
