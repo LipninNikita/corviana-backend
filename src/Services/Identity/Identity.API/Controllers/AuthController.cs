@@ -18,13 +18,9 @@ namespace Identity.API.Controllers
         {
             _loginService = loginService;
         }
-        /// <summary>
-        /// Handle postback from username/password login
-        /// </summary>
+
         [HttpPost]
         [Route(nameof(SignIn))]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [AllowAnonymous]
         public async Task<IActionResult> SignIn(SignInInput signInInputModel)
         {
@@ -33,13 +29,8 @@ namespace Identity.API.Controllers
             return Ok(result);
         }
 
-        /// <summary>
-        /// Handle postback from username/password login
-        /// </summary>
         [HttpPost]
         [Route(nameof(SignUp))]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [AllowAnonymous]
         public async Task<IdentityResult> SignUp(SignUpInput signUpInputModel)
         {

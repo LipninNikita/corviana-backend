@@ -3,6 +3,7 @@ version: '3.4'
 services:
   apigateway:
     image: ${DOCKER_REGISTRY-}apigateway
+    container_name: apigateway
     build:
       context: .
       dockerfile: src/ApiGateways/Web.Bff/Web.Bff.ApiGateway/Dockerfile
@@ -11,6 +12,7 @@ services:
 
   identity.api:
     image: ${DOCKER_REGISTRY-}identityapi
+    container_name: identityAPI
     build:
       context: .
       dockerfile: src/Services/Identity/Identity.API/Dockerfile
@@ -20,6 +22,19 @@ services:
     - Cache=cachedata
     ports:
     - "5001:80"
+ 
+  storage.api:
+    image: ${DOCKER_REGISTRY-}storageapi
+    container_name: storageAPI
+    build:
+      context: .
+      dockerfile: src/Services/Storage/Storage.API/Dockerfile    
+    environment:
+    - ConnectionString=Server=sqldata;Database=IdentityDb;User Id=admin;Password=Qwerty123
+    - RabbitMQ=rabbitmq:5672
+    - Cache=cachedata
+    ports:
+    - "5002:80"
 
   sqldata:
     image: postgres:13.3
@@ -49,6 +64,7 @@ services:
 volumes:
     isa-backend-sqldata:
         driver: local
+
 
 
 

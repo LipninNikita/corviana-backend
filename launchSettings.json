@@ -10,7 +10,8 @@
         "schedule.api": "StartDebugging",
         "client.api": "StartDebugging",
         "lead.api": "StartDebugging",
-        "web.bff.apigateway": "StartDebugging"
+        "web.bff.apigateway": "StartDebugging",
+        "storage.api": "StartDebugging"
       }
     }
   }
