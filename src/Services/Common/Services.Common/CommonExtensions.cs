@@ -20,7 +20,7 @@ namespace Services.Common
     {
         public static WebApplicationBuilder AddServiceDefaults(this WebApplicationBuilder builder)
         {
-            builder.Services.AddDefaultAuthentication(builder.Configuration);
+            builder.AddDefaultAuthentication(builder.Configuration);
             //builder.Services.AddAuthorization();
 
             builder.Services.AddHttpContextAccessor();
@@ -58,18 +58,18 @@ namespace Services.Common
             return app;
         }
 
-        [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-        public class AuthorizeAttribute : Attribute, IAuthorizationFilter
-        {
-            public void OnAuthorization(AuthorizationFilterContext context)
-            {
-                var account = context.HttpContext.Items["User"];
-                if (account == null)
-                {
-                    throw new UnauthorizedAccessException();
-                }
-            }
-        }
+        //[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+        //public class AuthorizeAttribute : Attribute, IAuthorizationFilter
+        //{
+        //    public void OnAuthorization(AuthorizationFilterContext context)
+        //    {
+        //        var account = context.HttpContext.Items["User"];
+        //        if (account == null)
+        //        {
+        //            throw new UnauthorizedAccessException();
+        //        }
+        //    }
+        //}
 
         public static IApplicationBuilder UseDefaultOpenApi(this WebApplication app, IConfiguration configuration)
         {
@@ -118,28 +118,30 @@ namespace Services.Common
 
             return services;
         }
-        public static IServiceCollection AddDefaultAuthentication(this IServiceCollection services, IConfiguration configuration)
+        public static WebApplicationBuilder AddDefaultAuthentication(this WebApplicationBuilder builder, IConfiguration configuration)
         {
-            services.AddAuthentication(option =>
+            builder.Services.AddAuthentication(option =>
             {
                 option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
             }).AddJwtBearer(options =>
             {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidateAudience = false,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = "https://host.docker.internal:5001",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretJWTsigningKey@123")),
+                    ValidIssuer = builder.Configuration["Auth:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Auth:SigningKey"])),
                     ClockSkew = TimeSpan.Zero,
                 };
             });
 
-            return services;
+            return builder;
         }
     }
 }

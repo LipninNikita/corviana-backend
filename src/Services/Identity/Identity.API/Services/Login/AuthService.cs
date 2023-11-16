@@ -20,11 +20,13 @@ namespace Identity.API.Services.Login
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IHttpContextAccessor accessor)
+        private readonly IConfiguration _configuration;
+        public AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IHttpContextAccessor accessor, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _httpContextAccessor = accessor;
+            _configuration = configuration;
         }
 
         public async Task<bool> SignInAsync(SignInInput signInInputModel)
@@ -32,9 +34,9 @@ namespace Identity.API.Services.Login
             var user = await _userManager.FindByEmailAsync(signInInputModel.Email);
             if (user != null)
             {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretJWTsigningKey@123"));
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Auth:SigningKey"]));
                 var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                var expirationTimeStamp = DateTime.Now.AddMinutes(1);
+                var expirationTimeStamp = DateTime.Now.AddMinutes(30);
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -42,13 +44,13 @@ namespace Identity.API.Services.Login
                 };
 
                 var tokenOptions = new JwtSecurityToken(
-                    issuer: "https://host.docker.internal:5001",
+                    issuer: _configuration["Auth:Issuer"],
                     claims: claims,
                     expires: expirationTimeStamp,
                     signingCredentials: signingCredentials
                 );
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-                _httpContextAccessor.HttpContext.Response.Headers.Add("Bearer", tokenString);
+                _httpContextAccessor.HttpContext.Response.Headers.Add("Token", tokenString);
                 return true;
             }
 
