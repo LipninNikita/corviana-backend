@@ -8,7 +8,6 @@ namespace Services.Common
     {
         public static IServiceCollection AddRedis(this IServiceCollection services, IConfiguration configuration)
         {
-
             return services.AddSingleton(sp =>
             {
                 var redisConfig = ConfigurationOptions.Parse(configuration.GetValue<string>("Cache"), true);
