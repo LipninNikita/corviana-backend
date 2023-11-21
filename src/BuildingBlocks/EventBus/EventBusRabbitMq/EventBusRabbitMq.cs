@@ -1,4 +1,5 @@
 ﻿using EventBusRabbitMq.Events;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -10,10 +11,12 @@ namespace EventBusRabbitMq
     public class EventBusRabbitMq : IEventBus
     {
         private readonly IModel _channel;
+        private readonly IServiceProvider _serviceProvider;
 
-        public EventBusRabbitMq(IModel channel)
+        public EventBusRabbitMq(IModel channel, IServiceProvider serviceProvider)
         {
             _channel = channel;
+            _serviceProvider = serviceProvider;
         }
 
         public void Publish<TEvent>(TEvent @event) where TEvent : Event
@@ -38,13 +41,16 @@ namespace EventBusRabbitMq
             _channel.QueueBind(queueName, exchangeName, "");
 
             var consumer = new EventingBasicConsumer(_channel);
-            consumer.Received += (model, ea) =>
+            consumer.Received += async (model, ea) =>
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
                 var @event = JsonConvert.DeserializeObject<TEvent>(message);
-                var handler = Activator.CreateInstance<TEventHandler>(); 
-                handler.Handle(@event);
+
+                using var scope = _serviceProvider.CreateScope();
+                var handler = (TEventHandler)scope.ServiceProvider.GetRequiredService(typeof(TEventHandler));
+                await handler.Handle(@event);
+                scope.Dispose();
             };
 
             _channel.BasicConsume(queueName, autoAck: true, consumer: consumer);

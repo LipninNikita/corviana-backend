@@ -1,7 +1,7 @@
-﻿using Storage.API.Data;
+﻿using MediaStorage.API.Data;
 using System.Data.Entity;
 
-namespace Storage.API.Services
+namespace MediaStorage.API.Services
 {
     public class ImageService : IImageService
     {

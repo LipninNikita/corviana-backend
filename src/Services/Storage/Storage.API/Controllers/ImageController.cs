@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Storage.API.Services;
+using MediaStorage.API.Services;
 
-namespace Storage.API.Controllers
+namespace MediaStorage.API.Controllers
 {
     [Route("api/v1/[controller]")]
     [Authorize]

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Storage.API.Migrations
+namespace MediaStorage.API.Migrations
 {
     /// <inheritdoc />
     public partial class inital : Migration

@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Storage.API.Data;
+using MediaStorage.API.Data;
 
 #nullable disable
 
-namespace Storage.API.Migrations
+namespace MediaStorage.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20231116132531_inital")]

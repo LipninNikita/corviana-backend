@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Storage.API.Data.Models;
+using MediaStorage.API.Data.Models;
 
-namespace Storage.API.Data
+namespace MediaStorage.API.Data
 {
     public class AppDbContext : DbContext
     {

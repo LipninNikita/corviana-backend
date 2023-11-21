@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Storage.API.Data.Models
+namespace MediaStorage.API.Data.Models
 {
     public class Image
     {
