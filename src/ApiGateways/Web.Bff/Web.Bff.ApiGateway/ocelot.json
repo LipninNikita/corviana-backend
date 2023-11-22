@@ -2,7 +2,7 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/v1/{everything}",
-      "UpstreamPathTemplate": "/api/v1/{everything}",
+      "UpstreamPathTemplate": "/api/v1/a/{everything}",
       "DownstreamHostAndPorts": [
         {
           "Host": "identity.api"
@@ -12,7 +12,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/{everything}",
-      "UpstreamPathTemplate": "/api/v1/{everything}",
+      "UpstreamPathTemplate": "/api/v1/s/{everything}",
       "DownstreamHostAndPorts": [
         {
           "Host": "storage.api"
@@ -27,7 +27,7 @@
       "Config": [
         {
           "Name": "Identity API",
-          "Url": "http://host.docker.internal:5001/swagger/v1/swagger.json"
+          "Url": "http://identity.api/swagger/v1/swagger.json"
         }
       ]
     },
@@ -36,7 +36,7 @@
       "Config": [
         {
           "Name": "Identity API",
-          "Url": "http://host.docker.internal:5002/swagger/v1/swagger.json"
+          "Url": "http://storage.api/swagger/v1/swagger.json"
         }
       ]
     }

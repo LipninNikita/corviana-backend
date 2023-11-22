@@ -1,5 +1,5 @@
 ﻿using MediaStorage.API.Data;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediaStorage.API.Services
 {
