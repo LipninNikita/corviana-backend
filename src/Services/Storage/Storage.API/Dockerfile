@@ -7,17 +7,17 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["src/Services/Storage/Storage.API/Storage.API.csproj", "src/Services/Storage/Storage.API/"]
+COPY ["src/Services/Storage/Storage.API/MediaStorage.API.csproj", "src/Services/Storage/Storage.API/"]
 COPY ["src/Services/Common/Services.Common/Services.Common.csproj", "src/Services/Common/Services.Common/"]
-RUN dotnet restore "src/Services/Storage/Storage.API/Storage.API.csproj"
+RUN dotnet restore "src/Services/Storage/Storage.API/MediaStorage.API.csproj"
 COPY . .
 WORKDIR "/src/src/Services/Storage/Storage.API"
-RUN dotnet build "Storage.API.csproj" -c Release -o /app/build
+RUN dotnet build "MediaStorage.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Storage.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "MediaStorage.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Storage.API.dll"]
+ENTRYPOINT ["dotnet", "MediaStorage.API.dll"]

@@ -5,8 +5,7 @@
       "UpstreamPathTemplate": "/api/v1/{everything}",
       "DownstreamHostAndPorts": [
         {
-          "Host": "host.docker.internal",
-          "Port": 5001
+          "Host": "identity.api"
         }
       ],
       "SwaggerKey": "Identity"
@@ -16,8 +15,7 @@
       "UpstreamPathTemplate": "/api/v1/{everything}",
       "DownstreamHostAndPorts": [
         {
-          "Host": "host.docker.internal",
-          "Port": 5002
+          "Host": "storage.api"
         }
       ],
       "SwaggerKey": "Images"
@@ -44,6 +42,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://host.docker.internal:5000"
+    "BaseUrl": "http://apigateway"
   }
 }
