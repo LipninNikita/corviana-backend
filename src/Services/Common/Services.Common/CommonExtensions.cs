@@ -58,19 +58,6 @@ namespace Services.Common
             return app;
         }
 
-        //[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-        //public class AuthorizeAttribute : Attribute, IAuthorizationFilter
-        //{
-        //    public void OnAuthorization(AuthorizationFilterContext context)
-        //    {
-        //        var account = context.HttpContext.Items["User"];
-        //        if (account == null)
-        //        {
-        //            throw new UnauthorizedAccessException();
-        //        }
-        //    }
-        //}
-
         public static IApplicationBuilder UseDefaultOpenApi(this WebApplication app, IConfiguration configuration)
         {
             var openApiSection = configuration.GetSection("OpenApi");

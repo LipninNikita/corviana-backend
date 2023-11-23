@@ -1,24 +1,34 @@
 ﻿{
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/v1/{everything}",
-      "UpstreamPathTemplate": "/api/v1/a/{everything}",
+      "DownstreamPathTemplate": "/api/v1/Auth/{everything}",
+      "UpstreamPathTemplate": "/api/v1/Auth/{everything}",
       "DownstreamHostAndPorts": [
         {
-          "Host": "identity.api"
+          "Host": "http://identity.api"
+        }
+      ],
+      "SwaggerKey": "Identity"
+    },   
+    {
+      "DownstreamPathTemplate": "/api/v1/Users/{everything}",
+      "UpstreamPathTemplate": "/api/v1/Users/{everything}",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "http://identity.api"
         }
       ],
       "SwaggerKey": "Identity"
     },
     {
-      "DownstreamPathTemplate": "/api/v1/{everything}",
-      "UpstreamPathTemplate": "/api/v1/s/{everything}",
+      "DownstreamPathTemplate": "/api/v1/Image/{everything}",
+      "UpstreamPathTemplate": "/api/v1/Image/{everything}",
       "DownstreamHostAndPorts": [
         {
           "Host": "storage.api"
         }
       ],
-      "SwaggerKey": "Images"
+      "SwaggerKey": "MediaStorage"
     }
   ],
   "SwaggerEndPoints": [
@@ -32,10 +42,10 @@
       ]
     },
     {
-      "Key": "Images",
+      "Key": "MediaStorage",
       "Config": [
         {
-          "Name": "Identity API",
+          "Name": "MediaStorage API",
           "Url": "http://storage.api/swagger/v1/swagger.json"
         }
       ]
