@@ -23,7 +23,7 @@ services:
     ports:
     - "5001:80"
  
-  storage.api:
+  mediastorage.api:
     image: ${DOCKER_REGISTRY-}storageapi
     container_name: storageAPI
     build:
