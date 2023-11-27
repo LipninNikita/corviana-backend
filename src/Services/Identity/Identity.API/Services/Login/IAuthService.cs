@@ -1,5 +1,4 @@
 ﻿using Identity.API.DTO.Input;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
 namespace Identity.API.Services.Login

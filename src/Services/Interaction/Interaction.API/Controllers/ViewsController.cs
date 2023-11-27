@@ -1,6 +1,4 @@
-﻿using EventBusRabbitMq;
-using Interaction.API.Events.Models;
-using Interaction.API.Services;
+﻿using Interaction.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Common.UserAccessor;

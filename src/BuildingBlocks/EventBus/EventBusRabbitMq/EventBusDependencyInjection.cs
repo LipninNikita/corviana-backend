@@ -11,7 +11,7 @@ namespace EventBusRabbitMq
 {
     public static class EventBusDependencyInjection
     {
-        public static WebApplicationBuilder AddEventBus(this WebApplicationBuilder builder)          
+        public static WebApplicationBuilder AddEventBus(this WebApplicationBuilder builder)
         {
             var connectionString = builder.Configuration.GetValue<string>("RabbitMQ");
 

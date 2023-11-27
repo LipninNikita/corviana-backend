@@ -13,7 +13,7 @@ namespace Identity.API.Services.User
         }
         public async Task<UserDetails> GetUserById(string id)
         {
-            var user = await _dbContext.Users.SingleOrDefaultAsync(x => x.Id ==  id);
+            var user = await _dbContext.Users.SingleOrDefaultAsync(x => x.Id == id);
             return user;
         }
 

@@ -1,17 +1,10 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Identity.API.Data.Models;
+using Identity.API.DTO.Input;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.AspNetCore.Http;
-using Azure;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Identity.API.DTO.Input;
-using Identity.API.Data.Models;
-using StackExchange.Redis;
 
 namespace Identity.API.Services.Login
 {
@@ -41,6 +34,7 @@ namespace Identity.API.Services.Login
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(ClaimTypes.Name, user.Email),
+                    new Claim(ClaimTypes.Email, user.Email),
                 };
 
                 var tokenOptions = new JwtSecurityToken(

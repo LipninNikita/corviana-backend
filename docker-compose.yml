@@ -24,17 +24,30 @@ services:
     - "5001:80"
  
   mediastorage.api:
-    image: ${DOCKER_REGISTRY-}storageapi
-    container_name: storageAPI
+    image: ${DOCKER_REGISTRY-}mediastorageapi
+    container_name: mediaStorageAPI
     build:
       context: .
-      dockerfile: src/Services/Storage/Storage.API/Dockerfile    
+      dockerfile: src/Services/MediaStorage/MediaStorage.API/Dockerfile    
     environment:
     - ConnectionString=Server=sqldata;Database=IdentityDb;User Id=admin;Password=Qwerty123
     - RabbitMQ=rabbitmq:5672
     - Cache=cachedata
     ports:
     - "5002:80"
+
+  interaction.api:
+    image: ${DOCKER_REGISTRY-}interactionapi
+    container_name: interactionAPI
+    build:
+      context: .
+      dockerfile: src/Services/Interaction/Interaction.API/Dockerfile    
+    environment:
+    - ConnectionString=Server=sqldata;Database=IdentityDb;User Id=admin;Password=Qwerty123
+    - RabbitMQ=rabbitmq:5672
+    - Cache=cachedata
+    ports:
+    - "5003:80"
 
   sqldata:
     image: postgres:13.3

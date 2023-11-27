@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MediaStorage.API.Data.Models;
+﻿using MediaStorage.API.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediaStorage.API.Data
 {

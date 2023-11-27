@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace MediaStorage.API.Services
+﻿namespace MediaStorage.API.Services
 {
     public interface IImageService
     {

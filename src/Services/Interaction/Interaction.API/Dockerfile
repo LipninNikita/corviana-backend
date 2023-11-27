@@ -3,11 +3,13 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 81
+EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["src/Services/Interaction/Interaction.API/Interaction.API.csproj", "src/Services/Interaction/Interaction.API/"]
+COPY ["src/BuildingBlocks/EventBus/EventBusRabbitMq/EventBusRabbitMq.csproj", "src/BuildingBlocks/EventBus/EventBusRabbitMq/"]
+COPY ["src/Services/Common/Services.Common/Services.Common.csproj", "src/Services/Common/Services.Common/"]
 RUN dotnet restore "src/Services/Interaction/Interaction.API/Interaction.API.csproj"
 COPY . .
 WORKDIR "/src/src/Services/Interaction/Interaction.API"

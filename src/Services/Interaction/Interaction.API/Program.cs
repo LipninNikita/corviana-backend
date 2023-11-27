@@ -13,7 +13,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.AddServiceDefaults();
 
-builder.AddEventBus(); 
+builder.AddEventBus();
 builder.AddGrpcServer();
 
 builder.Services.AddScoped<ILikeService, LikeService>();

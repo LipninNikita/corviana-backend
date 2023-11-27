@@ -1,9 +1,9 @@
 using Identity.API.Data.Models;
 using Identity.API.Services.Login;
+using Identity.API.Services.User;
 using Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Identity.API.Services.User;
 using Services.Common;
 
 var builder = WebApplication.CreateBuilder(args);

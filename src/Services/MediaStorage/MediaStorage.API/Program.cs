@@ -1,7 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using Services.Common;
 using MediaStorage.API.Data;
 using MediaStorage.API.Services;
+using Microsoft.EntityFrameworkCore;
+using Services.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();

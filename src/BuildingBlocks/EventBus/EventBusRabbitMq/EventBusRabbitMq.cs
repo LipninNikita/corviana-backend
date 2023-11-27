@@ -8,15 +8,18 @@ using System.Text;
 namespace EventBusRabbitMq
 {
     //TODO: Use MassTransit instead
+    //Subscribe should be register before building app
     public class EventBusRabbitMq : IEventBus
     {
         private readonly IModel _channel;
         private readonly IServiceProvider _serviceProvider;
+        private readonly IServiceCollection _services;
 
-        public EventBusRabbitMq(IModel channel, IServiceProvider serviceProvider)
+        public EventBusRabbitMq(IModel channel, IServiceProvider serviceProvider, IServiceCollection services)
         {
             _channel = channel;
             _serviceProvider = serviceProvider;
+            _services = services;
         }
 
         public void Publish<TEvent>(TEvent @event) where TEvent : Event
@@ -33,6 +36,8 @@ namespace EventBusRabbitMq
             where TEvent : Event
             where TEventHandler : IEventHandler<TEvent>
         {
+            _services.AddTransient(typeof(IEventHandler<>), typeof(TEventHandler));
+
             var exchangeName = typeof(TEvent).Name;
             var queueName = $"{exchangeName}.{typeof(TEventHandler).Name}";
 

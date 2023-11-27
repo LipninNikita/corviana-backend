@@ -1,5 +1,4 @@
 ﻿using Identity.API.Data.Models;
-using Identity.API.DTO.Input;
 
 namespace Identity.API.DTO.Output
 {

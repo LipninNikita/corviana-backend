@@ -1,5 +1,5 @@
-﻿using Services.Grpc.Interactions;
-using Grpc.Core;
+﻿using Grpc.Core;
+using Services.Grpc.Interactions;
 
 namespace Interaction.API.Services
 {
@@ -18,7 +18,7 @@ namespace Interaction.API.Services
         {
             var resultViews = await _viewService.GetViewsAmount(request.PostId);
             var resultLikes = await _likeService.GetLikesAmount(request.PostId);
-            return new GetPostInteractionsResponse() { LikesAmount = resultLikes.Amount, ViewsAmount = resultViews.Amount };
+            return new GetPostInteractionsResponse() { LikesAmount = resultLikes, ViewsAmount = resultViews };
         }
     }
 }
