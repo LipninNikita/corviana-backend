@@ -6,16 +6,19 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/Services/MediaStorage/MediaStorage.API/MediaStorage.API.csproj", "src/Services/MediaStorage/MediaStorage.API/"]
+COPY ["src/BuildingBlocks/EventBus/EventBusRabbitMq/EventBusRabbitMq.csproj", "src/BuildingBlocks/EventBus/EventBusRabbitMq/"]
 COPY ["src/Services/Common/Services.Common/Services.Common.csproj", "src/Services/Common/Services.Common/"]
-RUN dotnet restore "src/Services/MediaStorage/MediaStorage.API/MediaStorage.API.csproj"
+RUN dotnet restore "./src/Services/MediaStorage/MediaStorage.API/./MediaStorage.API.csproj"
 COPY . .
 WORKDIR "/src/src/Services/MediaStorage/MediaStorage.API"
-RUN dotnet build "MediaStorage.API.csproj" -c Release -o /app/build
+RUN dotnet build "./MediaStorage.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "MediaStorage.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./MediaStorage.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

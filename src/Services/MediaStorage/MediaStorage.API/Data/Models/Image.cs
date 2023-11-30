@@ -6,7 +6,7 @@ namespace MediaStorage.API.Data.Models
     public class Image
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public Guid PostId { get; set; }
+        public string PostId { get; set; }
         public string Content { get; set; }
     }
 }

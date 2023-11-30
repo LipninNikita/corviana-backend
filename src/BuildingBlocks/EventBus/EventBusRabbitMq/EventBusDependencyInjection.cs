@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Polly;
 using Polly.Retry;
 using RabbitMQ.Client;
@@ -27,9 +28,9 @@ namespace EventBusRabbitMq
                 var conn = factory.CreateConnection();
                 IModel channel = conn.CreateModel();
                 builder.Services.AddSingleton(channel);
-            });
 
-            builder.Services.AddTransient<IEventBus, EventBusRabbitMq>();
+                builder.Services.AddTransient<IEventBus, EventBusRabbitMq>();
+            });
 
             return builder;
         }

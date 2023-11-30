@@ -8,8 +8,6 @@ builder.AddServiceDefaults();
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
-builder.AddRedis();
-
 var app = builder.Build();
 
 app.UseServiceDefaults();

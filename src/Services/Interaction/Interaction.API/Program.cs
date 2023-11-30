@@ -12,19 +12,18 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration["ConnectionString"]));
 
 builder.AddServiceDefaults();
-
-builder.AddEventBus();
 builder.AddGrpcServer();
 
-builder.Services.AddScoped<ILikeService, LikeService>();
-builder.Services.AddScoped<IViewService, ViewService>();
+builder.Services.AddTransient<ILikeService, LikeService>();
+builder.Services.AddTransient<IViewService, ViewService>();
 
 builder.Services.AddTransient<HelloMsgHandler>();
+
+builder.AddEventBus();
 
 var app = builder.Build();
 
 var eventBus = app.Services.GetRequiredService<IEventBus>();
-
 eventBus.Subscribe<HelloMsg, HelloMsgHandler>();
 
 app.UseServiceDefaults();

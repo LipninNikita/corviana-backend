@@ -1,22 +1,25 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using EventBusRabbitMq;
+using EventBusRabbitMq.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Services.Common.UserAccessor;
 
 namespace Web.Bff.ApiGateway.Controllers
 {
     [Route("api/v1/[controller]")]
-    [AllowAnonymous]
+    [Authorize]
     [ApiController]
     public class PostsController : ControllerBase
     {
-        public PostsController()
+        private readonly IEventBus _bus;
+        private readonly IUserAccessor _userAccessor;
+
+        public PostsController(IEventBus bus, IUserAccessor userAccessor)
         {
+            _bus = bus;
+            _userAccessor = userAccessor;
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetPosts(int page, int rows)
-        {
-            return Ok(new[] { new { id = Guid.NewGuid(), Comment = new { Name = "Nikita", Content = "What a nice pic!", DT = DateTimeOffset.UtcNow }, Likes = 10, Views = 128 } });
-        }
+
     }
 }

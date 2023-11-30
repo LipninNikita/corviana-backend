@@ -21,8 +21,34 @@ services:
     - RabbitMQ=rabbitmq:5672
     - Cache=cachedata
     ports:
-    - "5001:80"
- 
+    - "5001:80"  
+    
+  post.api:
+    image: ${DOCKER_REGISTRY-}postapi
+    container_name: postAPI
+    build:
+      context: .
+      dockerfile: src/Services/Post/Post.API/Dockerfile
+    environment:
+    - ConnectionString=Server=sqldata;Database=IdentityDb;User Id=admin;Password=Qwerty123
+    - RabbitMQ=rabbitmq:5672
+    - Cache=cachedata
+    ports:
+    - "5002:80"
+
+  postcomments.api:
+    image: ${DOCKER_REGISTRY-}postcommentsapi    
+    container_name: postCommentsAPI
+    build:
+      context: .
+      dockerfile: src/Services/PostComments/PostComments.API/Dockerfile
+    environment:
+    - ConnectionString=Server=sqldata;Database=IdentityDb;User Id=admin;Password=Qwerty123
+    - RabbitMQ=rabbitmq:5672
+    - Cache=cachedata
+    ports:
+    - "5003:80"
+  
   mediastorage.api:
     image: ${DOCKER_REGISTRY-}mediastorageapi
     container_name: mediaStorageAPI
@@ -34,7 +60,7 @@ services:
     - RabbitMQ=rabbitmq:5672
     - Cache=cachedata
     ports:
-    - "5002:80"
+    - "5004:80"
 
   interaction.api:
     image: ${DOCKER_REGISTRY-}interactionapi
@@ -47,7 +73,7 @@ services:
     - RabbitMQ=rabbitmq:5672
     - Cache=cachedata
     ports:
-    - "5003:80"
+    - "5005:80"
 
   sqldata:
     image: postgres:13.3
@@ -57,7 +83,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - isa-backend-sqldata:/var/lib/postgresql/data
+      - corviana-backend-sqldata:/var/lib/postgresql/data
 
   cachedata:
     image: redis:latest
@@ -75,8 +101,10 @@ services:
       - "15672:15672"
 
 volumes:
-    isa-backend-sqldata:
+    corviana-backend-sqldata:
         driver: local
+
+
 
 
 

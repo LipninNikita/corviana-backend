@@ -20,7 +20,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-builder.Services.AddRedis(builder.Configuration);
+builder.AddRedis();
 
 builder.AddGrpcServer();
 

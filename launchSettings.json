@@ -11,7 +11,9 @@
         "client.api": "StartDebugging",
         "lead.api": "StartDebugging",
         "web.bff.apigateway": "StartDebugging",
-        "storage.api": "StartDebugging"
+        "storage.api": "StartDebugging",
+        "postcomments.api": "StartDebugging",
+        "post.api": "StartDebugging"
       }
     }
   }
