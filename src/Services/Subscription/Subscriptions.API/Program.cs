@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Identity;
+using EventBusRabbitMq;
 using Microsoft.EntityFrameworkCore;
 using Services.Common;
-using Feed.API.Data;
+using Subscriptions.API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +9,8 @@ builder.AddServiceDefaults();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration["ConnectionString"]));
+
+builder.AddEventBus();
 
 var app = builder.Build();
 

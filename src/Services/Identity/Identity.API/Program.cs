@@ -13,16 +13,23 @@ builder.AddServiceDefaults();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration["ConnectionString"]));
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(x =>
+{
+    x.Password.RequiredUniqueChars = 0;
+    x.Password.RequireNonAlphanumeric = false;
+    x.Password.RequireUppercase = false;
+    x.Password.RequireDigit = false;
+    x.Password.RequireLowercase = false;
+})
         .AddEntityFrameworkStores<AppDbContext>()
         .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-builder.AddRedis();
+//builder.AddRedis();
 
-builder.AddGrpcServer();
+//builder.AddGrpcServer();
 
 var app = builder.Build();
 
