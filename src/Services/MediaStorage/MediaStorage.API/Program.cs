@@ -1,5 +1,4 @@
 using EventBusRabbitMq;
-using EventBusRabbitMq.Models;
 using MediaStorage.API.Data;
 using MediaStorage.API.Events;
 using MediaStorage.API.Services;

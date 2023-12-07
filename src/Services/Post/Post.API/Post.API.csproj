@@ -11,6 +11,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Events\Models\**" />
+	  <Content Remove="Events\Models\**" />
+	  <EmbeddedResource Remove="Events\Models\**" />
+	  <None Remove="Events\Models\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.14">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -22,10 +29,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBusRabbitMq\EventBusRabbitMq.csproj" />
 		<ProjectReference Include="..\..\Common\Services.Common\Services.Common.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Events\Models\" />
 	</ItemGroup>
 
 </Project>

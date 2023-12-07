@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventBusRabbitMq.Models
+namespace Post.API.Events
 {
     public class PostCreatedEvent : Event
     {

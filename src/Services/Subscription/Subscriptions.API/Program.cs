@@ -2,6 +2,7 @@ using EventBusRabbitMq;
 using Microsoft.EntityFrameworkCore;
 using Services.Common;
 using Subscriptions.API.Data;
+using Subscriptions.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,8 @@ builder.AddServiceDefaults();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration["ConnectionString"]));
+
+builder.Services.AddTransient<ISubscriptionService, SubscriptionService>();
 
 builder.AddEventBus();
 
