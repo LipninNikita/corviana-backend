@@ -1,5 +1,6 @@
 ﻿using EventBusRabbitMq;
 using Quartz;
+using Quest.BackgroundTasks.Events.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Quest.BackgroundTasks
             var schedulerContext = context.Scheduler.Context;
             var bus = (IEventBus)schedulerContext.Get("bus");
 
-            bus.Publish(new CheckQuestOverdueEvent() { UserId = context.JobDetail.JobDataMap.GetString("userId") });
+            bus.Publish(new QuestOverdueEvent() { QuestId = Guid.Parse(context.JobDetail.JobDataMap.GetString("questId")) });
         }
     }
 }

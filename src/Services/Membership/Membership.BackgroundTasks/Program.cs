@@ -19,7 +19,7 @@ class Program
 
                        services.AddSingleton(scheduler);
 
-                       services.AddEventBus(context.Configuration["RabbitMQ"])
+                       services.AddEventBus(context.Configuration["RabbitMQ"]);
 
                        await scheduler.Start();
 

@@ -1,7 +1,4 @@
 ﻿using EventBusRabbitMq;
-using Membership.API.Events.Models;
-using Membership.BackgroundTasks;
-using Membership.BackgroundTasks.Events.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Quartz;
