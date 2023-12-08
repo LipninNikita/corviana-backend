@@ -4,6 +4,9 @@ using Services.Common;
 using System;
 using Membership.API.Data;
 using Sberbank.NetCore;
+using Membership.API.Services;
+using Membership.API.Events.Handler;
+using Membership.API.Events.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +17,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.AddEventBus();
 
-//builder.Services.AddTransient<IAnswerService, AnswerService>();
+builder.Services.AddTransient<IMembershipService, MembershipService>();
+builder.Services.AddTransient<MembershipOverdueEventHandler>();
 
 //builder.AddRedis();
 
@@ -26,8 +30,8 @@ var app = builder.Build();
 
 app.UseServiceDefaults();
 
-//var bus = app.Services.GetRequiredService<IEventBus>();
-//bus.Subscribe<QuestionCreatedEvent, QuestionCreatedEventHandler>();
+var bus = app.Services.GetRequiredService<IEventBus>();
+bus.Subscribe<MembershipOverdueEvent, MembershipOverdueEventHandler>();
 
 using (var scope = app.Services.CreateScope())
 {

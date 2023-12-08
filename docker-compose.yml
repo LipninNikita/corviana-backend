@@ -92,6 +92,27 @@ services:
     ports:
     - "5006:80" 
 
+  membership.api:
+    image: ${DOCKER_REGISTRY-}membership.api
+    container_name: membership.api
+    build:
+      context: .
+      dockerfile: src/Services/Membership/Membership.API/Dockerfile
+    environment:
+    - ConnectionString=Server=sqldata;Database=ThemeDb;User Id=admin;Password=Qwerty123
+    - RabbitMQ=rabbitmq
+    - Cache=cachedata
+    ports:
+    - "5007:80" 
+
+  membership.backgroundtasks:
+    image: ${DOCKER_REGISTRY-}membershipbackgroundtasks
+    build:
+      context: .
+      dockerfile: src/Services/Membership/Membership.BackgroundTasks/Dockerfile
+    environment:
+    - RabbitMQ=rabbitmq
+
   sqldata:
     image: postgres:13.3
     container_name: sqldata
@@ -122,6 +143,7 @@ services:
 volumes:
     corviana-backend-sqldata:
         driver: local
+
 
 
 

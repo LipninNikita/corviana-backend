@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Membership.BackgroundTasks": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

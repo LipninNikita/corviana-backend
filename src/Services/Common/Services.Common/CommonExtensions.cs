@@ -46,7 +46,7 @@ namespace Services.Common
 
             app.MapControllers().RequireAuthorization();
 
-            app.UseCors(x => { x.AllowAnyOrigin(); x.AllowAnyHeader(); x.AllowAnyMethod(); });
+            app.UseCors(x => { x.AllowAnyOrigin(); x.AllowAnyHeader(); x.AllowAnyMethod(); x.SetIsOriginAllowed(x => true); });
 
             app.UseMvc().UseMvcWithDefaultRoute();
 

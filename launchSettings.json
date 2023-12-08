@@ -13,7 +13,8 @@
         "web.bff.apigateway": "StartDebugging",
         "storage.api": "StartDebugging",
         "postcomments.api": "StartDebugging",
-        "post.api": "StartDebugging"
+        "post.api": "StartDebugging",
+        "membership.backgroundtasks": "StartDebugging"
       }
     }
   }
