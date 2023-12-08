@@ -23,7 +23,7 @@ namespace Theme.API.Services
             return model.Id;
         }
 
-        public async Task<ThemeOutput> GetByIt(int id)
+        public async Task<ThemeOutput> GetById(int id)
         {
             var result = await _dbContext.Themes.SingleOrDefaultAsync(x => x.Id == id);
 

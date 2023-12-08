@@ -8,6 +8,7 @@ namespace Identity.API.DTO.Input
         public required string LastName { get; set; }
         public required string Password { get; set; }
         public required string Email { get; set; }
+        public required string Username { get; set; }
 
         public static implicit operator ApplicationUser(SignUpInput model)
         {
@@ -16,7 +17,8 @@ namespace Identity.API.DTO.Input
                 Email = model.Email,
                 UserName = model.Email,
                 LastName = model.LastName,
-                Name = model.Name
+                Name = model.Name,
+                Username = model.Username,
             };
             return user;
         }

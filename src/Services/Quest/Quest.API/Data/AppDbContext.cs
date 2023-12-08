@@ -8,6 +8,6 @@ namespace Quest.API.Data
         {
         }
 
-        public DbSet<Models.Quest> Quests { get; set; }s
+        public DbSet<Models.Quest> Quests { get; set; }
     }
 }

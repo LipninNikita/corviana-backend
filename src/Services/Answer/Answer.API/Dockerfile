@@ -7,6 +7,8 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["src/Services/Answer/Answer.API/Answer.API.csproj", "src/Services/Answer/Answer.API/"]
+COPY ["src/BuildingBlocks/EventBus/EventBusRabbitMq/EventBusRabbitMq.csproj", "src/BuildingBlocks/EventBus/EventBusRabbitMq/"]
+COPY ["src/Services/Common/Services.Common/Services.Common.csproj", "src/Services/Common/Services.Common/"]
 RUN dotnet restore "src/Services/Answer/Answer.API/Answer.API.csproj"
 COPY . .
 WORKDIR "/src/src/Services/Answer/Answer.API"

@@ -5,7 +5,7 @@ namespace Identity.API.DTO.Output
     public class UserDetails
     {
         public string Id { get; set; }
-        public string Email { get; set; }
+        public string Username { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
 
@@ -14,7 +14,7 @@ namespace Identity.API.DTO.Output
             var user = new UserDetails()
             {
                 Id = input.Id,
-                Email = input.Email,
+                Username = input.Username,
                 Name = input.Name,
                 LastName = input.LastName,
             };

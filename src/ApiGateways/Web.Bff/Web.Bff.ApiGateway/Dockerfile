@@ -7,6 +7,8 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["src/ApiGateways/Web.Bff/Web.Bff.ApiGateway/Web.Bff.ApiGateway.csproj", "src/ApiGateways/Web.Bff/Web.Bff.ApiGateway/"]
+COPY ["src/BuildingBlocks/EventBus/EventBusRabbitMq/EventBusRabbitMq.csproj", "src/BuildingBlocks/EventBus/EventBusRabbitMq/"]
+COPY ["src/Services/Common/Services.Common/Services.Common.csproj", "src/Services/Common/Services.Common/"]
 RUN dotnet restore "src/ApiGateways/Web.Bff/Web.Bff.ApiGateway/Web.Bff.ApiGateway.csproj"
 COPY . .
 WORKDIR "/src/src/ApiGateways/Web.Bff/Web.Bff.ApiGateway"

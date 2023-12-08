@@ -1,5 +1,6 @@
 ﻿using Answer.API.Data;
 using Answer.API.DTO;
+using Microsoft.EntityFrameworkCore;
 
 namespace Answer.API.Services
 {
@@ -24,6 +25,14 @@ namespace Answer.API.Services
         public Task Delete(Guid id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<AnswerOutput> GetByIds(string ids)
+        {
+            var idsArr = ids.Split(';');
+            var result = await _dbContext.Answers.SingleOrDefaultAsync(x => idsArr.Contains(x.Id.ToString()));
+
+            return result;
         }
 
         public Task<IEnumerable<AnswerOutput>> GetByQuestionId(int id)

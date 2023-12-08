@@ -28,7 +28,7 @@ namespace Theme.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var result = await _themeService.GetByIt(id);
+            var result = await _themeService.GetById(id);
 
             return Ok(result);
         }

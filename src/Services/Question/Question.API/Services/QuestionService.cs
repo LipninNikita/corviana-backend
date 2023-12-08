@@ -30,7 +30,8 @@ namespace Question.API.Services
 
         public async Task<IEnumerable<QuestionOutput>> GetByIds(string ids)
         {
-            var result = await _dbContext.Questions.Where(x => ids.Contains(x.Id.ToString())).ToListAsync();
+            var idsArr = ids.Split(';');
+            var result = await _dbContext.Questions.Where(x => idsArr.Contains(x.Id.ToString())).ToListAsync();
 
             return result.Select(x => (QuestionOutput)x);
         }

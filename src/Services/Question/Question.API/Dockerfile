@@ -8,6 +8,8 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["src/Services/Question/Question.API/Question.API.csproj", "src/Services/Question/Question.API/"]
+COPY ["src/BuildingBlocks/EventBus/EventBusRabbitMq/EventBusRabbitMq.csproj", "src/BuildingBlocks/EventBus/EventBusRabbitMq/"]
+COPY ["src/Services/Common/Services.Common/Services.Common.csproj", "src/Services/Common/Services.Common/"]
 RUN dotnet restore "src/Services/Question/Question.API/Question.API.csproj"
 COPY . .
 WORKDIR "/src/src/Services/Question/Question.API"

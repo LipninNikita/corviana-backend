@@ -20,9 +20,9 @@ namespace Question.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> Get([FromRoute]int id)
+        public async Task<IActionResult> Get([FromRoute]string id)
         {
-            var result = await _questionService.GetById(id);
+            var result = await _questionService.GetByIds(id);
 
             return Ok(result);
         }

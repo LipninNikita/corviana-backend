@@ -9,5 +9,6 @@ namespace Test.API.Data
         }
 
         public DbSet<Models.Test> Tests { get; set; }
+        public DbSet<Models.UserTestTransaction> UserTestTransactions { get; set; }
     }
 }

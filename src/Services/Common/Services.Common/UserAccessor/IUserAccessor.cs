@@ -6,7 +6,7 @@ namespace Services.Common.UserAccessor
 {
     public interface IUserAccessor
     {
-        public string GetUserId();
+        public string? GetUserId();
         public string GetUserEmail();
     }
     public class UserAccessor : IUserAccessor
@@ -25,11 +25,18 @@ namespace Services.Common.UserAccessor
             throw new NotImplementedException();
         }
 
-        public string GetUserId()
+        public string? GetUserId()
         {
             var token = new JwtSecurityTokenHandler().ReadJwtToken(jwt);
             var userId = token.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            return userId;
+            if (userId != null)
+            {
+                return userId;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
