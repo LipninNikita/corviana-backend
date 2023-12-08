@@ -77,7 +77,7 @@ services:
 
   theme.api:
     image: ${DOCKER_REGISTRY-}theme.api
-    container_name: test.api
+    container_name: theme.api
     build:
       context: .
       dockerfile: src/Services/Theme/Theme.API/Dockerfile
