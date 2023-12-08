@@ -1,4 +1,5 @@
-﻿using Question.API.Data;
+﻿using EventBusRabbitMq;
+using Question.API.Data;
 using Question.API.Data.Models;
 using Question.API.DTO;
 using System.Data.Entity;
@@ -8,7 +9,6 @@ namespace Question.API.Services
     public class QuestionService : IQuestionService
     {
         private readonly AppDbContext _dbContext;
-
         public QuestionService(AppDbContext dbContext)
         {
             _dbContext = dbContext;

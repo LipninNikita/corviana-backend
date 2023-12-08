@@ -15,9 +15,11 @@ builder.Services.AddTransient<IQuestionService, QuestionService>();
 
 //builder.AddRedis();
 
-//builder.AddGrpcServer();
+builder.AddGrpcServer();
 
 var app = builder.Build();
+
+app.UseGrpcServer<QuestionsGrpc>();
 
 app.UseServiceDefaults();
 

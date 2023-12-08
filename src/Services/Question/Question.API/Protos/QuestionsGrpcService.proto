@@ -1,0 +1,19 @@
+﻿syntax = "proto3";
+ 
+option csharp_namespace = "Questions.API.Grpc.Services";
+ 
+package QuestionsGrpcService;
+ 
+service QuestionsGrpcService {
+  rpc AddQuestion (AddQuestionRequest) returns (AddQuestionResponse);
+}
+ 
+message AddQuestionRequest {
+  string content = 1;
+  int32 type = 2;
+  int32 lvl = 3;
+}
+ 
+message AddQuestionResponse {
+  string id = 1;
+}

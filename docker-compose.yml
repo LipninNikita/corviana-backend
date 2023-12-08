@@ -7,6 +7,9 @@ services:
     build:
       context: .
       dockerfile: src/ApiGateways/Web.Bff/Web.Bff.ApiGateway/Dockerfile
+    environment:
+    - RabbitMQ=rabbitmq:5672
+    - QuestionsGrpc=questions.api:6002 
     ports:
     - "5000:80" 
 
@@ -35,6 +38,7 @@ services:
     - Cache=cachedata
     ports:
     - "5002:80"  
+    - "6002:81"
 
   answer.api:
     image: ${DOCKER_REGISTRY-}answer.api

@@ -1,4 +1,6 @@
-﻿namespace Answer.API.DTO
+﻿using Answer.API.Events.Models;
+
+namespace Answer.API.DTO
 {
     public class AddAnswer
     {
