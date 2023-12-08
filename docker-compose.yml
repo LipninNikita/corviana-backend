@@ -11,8 +11,8 @@ services:
     - "5000:80" 
 
   identity.api:
-    image: ${DOCKER_REGISTRY-}identityapi
-    container_name: identityAPI
+    image: ${DOCKER_REGISTRY-}identity.api
+    container_name: identity.api
     build:
       context: .
       dockerfile: src/Services/Identity/Identity.API/Dockerfile
@@ -23,14 +23,38 @@ services:
     ports:
     - "5001:80"  
 
+  question.api:
+    image: ${DOCKER_REGISTRY-}question.api
+    container_name: question.api
+    build:
+      context: .
+      dockerfile: src/Services/Question/Question.API/Dockerfile
+    environment:
+    - ConnectionString=Server=sqldata;Database=QuestionDb;User Id=admin;Password=Qwerty123
+    - RabbitMQ=rabbitmq
+    - Cache=cachedata
+    ports:
+    - "5002:80"  
+
+  answer.api:
+    image: ${DOCKER_REGISTRY-}answer.api
+    container_name: answer.api
+    build:
+      context: .
+      dockerfile: src/Services/Answer/Answer.API/Dockerfile
+    environment:
+    - ConnectionString=Server=sqldata;Database=QuestionDb;User Id=admin;Password=Qwerty123
+    - RabbitMQ=rabbitmq
+    - Cache=cachedata
+    ports:
+    - "5003:80" 
+
   sqldata:
     image: postgres:13.3
     container_name: sqldata
     environment:
        POSTGRES_USER: "admin"
        POSTGRES_PASSWORD: "Qwerty123"
-    ports:
-      - "5432:5432"
     volumes:
       - corviana-backend-sqldata:/var/lib/postgresql/data
 

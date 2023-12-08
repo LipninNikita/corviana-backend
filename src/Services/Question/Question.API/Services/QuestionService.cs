@@ -27,11 +27,19 @@ namespace Question.API.Services
             throw new NotImplementedException();
         }
 
-        public async Task<QuestionOutput> GetById(int id)
+        public async Task<IEnumerable<QuestionOutput>> GetByIds(string ids)
         {
-            var result = await _dbContext.Questions.SingleOrDefaultAsync(x => x.Id ==  id);
-    
-            return result;
+            var result = new List<Data.Models.Question>();
+            if(ids.Split(';').Count() > 1)
+            {
+                result = await _dbContext.Questions.Where(x => ids.Contains(x.Id.ToString())).ToListAsync();
+            }
+            else
+            {
+                result = await _dbContext.Questions.Where(x => x.Id == int.Parse(ids)).ToListAsync();
+            }
+
+            return result.Select(x => (QuestionOutput)x);
         }
 
         public async Task<QuestionOutput> GetRandom(QuestionTypeEnum? type, QuestionLvlEnum? lvl)
