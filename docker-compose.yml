@@ -86,7 +86,7 @@ services:
     - RabbitMQ=rabbitmq
     - Cache=cachedata
     ports:
-    - "5005:80" 
+    - "5006:80" 
 
   sqldata:
     image: postgres:13.3
