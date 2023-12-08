@@ -19,6 +19,7 @@ namespace Question.API.Services
             Data.Models.Question result = input;
             await _dbContext.Questions.AddAsync(result);
             await _dbContext.SaveChangesAsync();
+
             return result.Id;
         }
 
@@ -29,15 +30,7 @@ namespace Question.API.Services
 
         public async Task<IEnumerable<QuestionOutput>> GetByIds(string ids)
         {
-            var result = new List<Data.Models.Question>();
-            if(ids.Split(';').Count() > 1)
-            {
-                result = await _dbContext.Questions.Where(x => ids.Contains(x.Id.ToString())).ToListAsync();
-            }
-            else
-            {
-                result = await _dbContext.Questions.Where(x => x.Id == int.Parse(ids)).ToListAsync();
-            }
+            var result = await _dbContext.Questions.Where(x => ids.Contains(x.Id.ToString())).ToListAsync();
 
             return result.Select(x => (QuestionOutput)x);
         }
@@ -55,7 +48,7 @@ namespace Question.API.Services
             var amount = await query.CountAsync();
             var randomizedSkip = new Random().Next(0, amount);
 
-            var result = await query.Skip(randomizedSkip).SingleOrDefaultAsync();
+            var result = await query.Skip(randomizedSkip).Take(1).SingleOrDefaultAsync();
 
             return result;
         }
