@@ -6,6 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Quartz;
 using Quartz.Impl;
+using Quest.BackgroundTasks.Events.Handlers;
+using Quest.BackgroundTasks.Events.Models;
+using Quests.BackgroundTasks;
 
 class Program
 {
@@ -13,13 +16,13 @@ class Program
     {
         IHost host = Host.CreateDefaultBuilder(args)
                    .ConfigureServices(async (context, services) =>
-                   {                           
+                   {
                        ISchedulerFactory schedulerFactory = new StdSchedulerFactory();
                        IScheduler scheduler = await schedulerFactory.GetScheduler();
 
                        services.AddSingleton(scheduler);
 
-                       services.AddEventBus(context.Configuration["RabbitMQ"])
+                       services.AddEventBus(context.Configuration["RabbitMQ"]);
 
                        await scheduler.Start();
 
@@ -27,8 +30,8 @@ class Program
                        var bus = provider.GetRequiredService<IEventBus>();
                        scheduler.Context.Put("bus", bus);
 
-                       services.AddTransient<MembershipBoughtEventHandler>();
-                       bus.Subscribe<MembershipBoughtEvent, MembershipBoughtEventHandler>();
+                       services.AddTransient<QuestCreatedEventHandler>();
+                       bus.Subscribe<QuestCreatedEvent, QuestCreatedEventHandler>();
                    })
                    .Build();
 

@@ -18,11 +18,11 @@ namespace Membership.API.Services
             _bus = bus;
         }
 
-        public async Task<string> Buy(AddMembership input)
+        public async Task<RegisterOutput> Buy(AddMembership input)
         {
             var result = await _sber.RegisterOrderAsync(input);
 
-            return result.OrderId;
+            return result;
         }
 
         public Task IsPayed(string orderId)

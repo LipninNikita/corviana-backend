@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Membership.API", "src\Servi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Membership.BackgroundTasks", "src\Services\Membership\Membership.BackgroundTasks\Membership.BackgroundTasks.csproj", "{15628D7F-FC06-4960-88C1-51A4D505E136}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quest.BackgroundTasks", "src\Services\Quest\Quests.BackgroundTasks\Quest.BackgroundTasks.csproj", "{2951EDC2-50FE-4038-B7A9-0D9DD752EBBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +111,10 @@ Global
 		{15628D7F-FC06-4960-88C1-51A4D505E136}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15628D7F-FC06-4960-88C1-51A4D505E136}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15628D7F-FC06-4960-88C1-51A4D505E136}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2951EDC2-50FE-4038-B7A9-0D9DD752EBBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2951EDC2-50FE-4038-B7A9-0D9DD752EBBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2951EDC2-50FE-4038-B7A9-0D9DD752EBBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2951EDC2-50FE-4038-B7A9-0D9DD752EBBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -138,6 +144,7 @@ Global
 		{0712033D-CF9A-4585-992C-FC5726DE7C51} = {C6C7DED2-8263-444F-B796-E891E2B30405}
 		{56AC61D6-A93D-4007-9BD3-3B4A5267BB4F} = {0712033D-CF9A-4585-992C-FC5726DE7C51}
 		{15628D7F-FC06-4960-88C1-51A4D505E136} = {0712033D-CF9A-4585-992C-FC5726DE7C51}
+		{2951EDC2-50FE-4038-B7A9-0D9DD752EBBE} = {226287A9-EC84-47CD-9011-D745A8C1AD73}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {41D89F08-D26A-46CC-90EA-1E678C03DE7A}

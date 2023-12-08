@@ -11,6 +11,7 @@ namespace Quest.API.Data.Models
         public int TimesToFinish {  get; set; }
         public string IdUser { get; set; }
         public bool IsFinished { get; set; }
+        public bool IsSucceed { get; set; }
         public QuestLifeTime QuestLifeTime { get; set; }
         public QuestType QuestType { get; set; }
         public DateTimeOffset DtCreated { get; set; } = DateTimeOffset.UtcNow;

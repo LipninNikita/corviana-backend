@@ -7,5 +7,7 @@ namespace Identity.API.Services.Login
     {
         Task<bool> SignInAsync(SignInInput loginInputModel);
         Task<IdentityResult> SignUpAsync(SignUpInput user);
+        public Task AddRole(string Name);
+        public Task AddToTole(string Name, string userId);
     }
 }
