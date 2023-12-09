@@ -18,14 +18,6 @@ namespace Question.API.Controllers
             _questionService = questionService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Add(AddQuestion input)
-        {
-            var result = await _questionService.Add(input);
-
-            return Ok(result);
-        }
-
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

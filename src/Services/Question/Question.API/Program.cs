@@ -14,6 +14,8 @@ builder.AddServiceDefaults();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration["ConnectionString"]));
 
+builder.AddEventBus();
+
 builder.Services.AddTransient<IQuestionService, QuestionService>();
 builder.Services.AddTransient<TestCompletedEventHandler>();
 //builder.AddRedis();
