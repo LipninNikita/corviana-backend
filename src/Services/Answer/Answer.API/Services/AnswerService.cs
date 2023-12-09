@@ -48,8 +48,8 @@ namespace Answer.API.Services
             var idsArr = ids.Split(';');
             foreach (var id in idsArr)
             {
-                var entity = await _dbContext.Answers.Where(x => x.IdQuestion == int.Parse(id)).FirstOrDefaultAsync();
-                result.Add(entity);
+                var entity = await _dbContext.Answers.Where(x => x.IdQuestion == int.Parse(id)).ToArrayAsync();
+                result.AddRange(entity);
             }
             //var result = await _dbContext.Answers.Where(x => idsArr.Contains(x.Id.ToString())).ToListAsync();
 
