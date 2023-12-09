@@ -9,7 +9,7 @@ services:
       dockerfile: src/ApiGateways/Web.Bff/Web.Bff.ApiGateway/Dockerfile
     environment:
     - RabbitMQ=rabbitmq
-    - QuestionsGrpc=question.api:6002 
+    - QuestionsGrpc=http://question.api:6002 
     ports:
     - "5000:80" 
 
