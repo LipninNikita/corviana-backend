@@ -1,6 +1,7 @@
 ﻿using Identity.API.Services.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Services.Common.UserAccessor;
 
 namespace Identity.API.Controllers
 {
@@ -10,10 +11,12 @@ namespace Identity.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IUserAccessor _userAccessor;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, IUserAccessor userAccessor)
         {
             _userService = userService;
+            _userAccessor = userAccessor;
         }
 
         [HttpGet]
@@ -36,9 +39,9 @@ namespace Identity.API.Controllers
 
         [HttpGet]
         [Route("UserId")]
-        public async Task<IActionResult> GetUserId()
+        public IActionResult GetUserId()
         {
-            var result = await _userService.GetUserId();
+            var result = _userAccessor.GetUserId();
 
             return Ok(result);
         }

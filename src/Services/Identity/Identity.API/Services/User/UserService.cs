@@ -20,12 +20,6 @@ namespace Identity.API.Services.User
             return user;
         }
 
-        public Task<string> GetUserId()
-        {
-            var result = _userAccessor.GetUserId();
-            return Task.FromResult(result);
-        }
-
         public async Task<IEnumerable<UsersInfo>> GetUsers()
         {
             var users = await _dbContext.Users.ToListAsync();

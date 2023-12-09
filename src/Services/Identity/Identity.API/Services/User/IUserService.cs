@@ -6,6 +6,5 @@ namespace Identity.API.Services.User
     {
         public Task<UserDetails> GetUserById(string id);
         public Task<IEnumerable<UsersInfo>> GetUsers();
-        public Task<string> GetUserId();
     }
 }

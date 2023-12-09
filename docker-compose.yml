@@ -68,11 +68,13 @@ services:
 
   quest.backgroundtasks:
     image: ${DOCKER_REGISTRY-}questbackgroundtasks
+    container_name: quest.backgroundtasks
     build:
       context: .
       dockerfile: src/Services/Quest/Quests.BackgroundTasks/Dockerfile
     environment:
     - RabbitMQ=rabbitmq
+
   test.api:
     image: ${DOCKER_REGISTRY-}test.api
     container_name: test.api
@@ -106,7 +108,7 @@ services:
       context: .
       dockerfile: src/Services/Membership/Membership.API/Dockerfile
     environment:
-    - ConnectionString=Server=sqldata;Database=ThemeDb;User Id=admin;Password=Qwerty123
+    - ConnectionString=Server=sqldata;Database=MembershipDb;User Id=admin;Password=Qwerty123
     - RabbitMQ=rabbitmq
     - Cache=cachedata
     ports:
@@ -114,11 +116,25 @@ services:
 
   membership.backgroundtasks:
     image: ${DOCKER_REGISTRY-}membershipbackgroundtasks
+    container_name: membership.backgroundtasks
     build:
       context: .
       dockerfile: src/Services/Membership/Membership.BackgroundTasks/Dockerfile
     environment:
     - RabbitMQ=rabbitmq
+
+  point.api:
+    image: ${DOCKER_REGISTRY-}point.api
+    container_name: point.api
+    build:
+      context: .
+      dockerfile: src/Services/Point/Point.API/Dockerfile
+    environment:
+    - ConnectionString=Server=sqldata;Database=PointDb;User Id=admin;Password=Qwerty123
+    - RabbitMQ=rabbitmq
+    - Cache=cachedata
+    ports:
+    - "5008:80" 
 
   sqldata:
     image: postgres:13.3
@@ -150,6 +166,7 @@ services:
 volumes:
     corviana-backend-sqldata:
         driver: local
+
 
 
 
