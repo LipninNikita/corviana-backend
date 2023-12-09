@@ -18,6 +18,14 @@ namespace Question.API.Controllers
             _questionService = questionService;
         }
 
+        [HttpPost]
+        [Route("Answer")]
+        public async Task<IActionResult> Answer([FromBody]int QuestionId, bool IsSuccess)
+        {
+            await _questionService.AnswerQuestion(QuestionId, IsSuccess);
+            return Ok();
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

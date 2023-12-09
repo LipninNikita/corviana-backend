@@ -37,8 +37,10 @@ namespace Question.API.Services
             var transaction = new Data.Models.UserQuestionTransaction();
             transaction.UserId = userId;
             transaction.QuestionId = QuestionId;
+            await _dbContext.UserQuestionTransactions.AddAsync(transaction);
+            await _dbContext.SaveChangesAsync();
 
-            _bus.Publish(new QuestionCompletedEvent() { QuestionId = question.Id.ToString(), Level = (int)question.Level, UserId = userId });
+            _bus.Publish(new QuestionCompletedEvent() { QuestionId = question.Id.ToString(), Level = (int)question.Level, UserId = userId, IsSuccess = IsSuccess });
         }
 
         public Task Delete(int id)

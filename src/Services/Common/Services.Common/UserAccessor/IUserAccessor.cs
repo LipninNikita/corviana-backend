@@ -8,6 +8,8 @@ namespace Services.Common.UserAccessor
     {
         public string? GetUserId();
         public string GetUserEmail();
+        public bool IsMember();
+        public bool IsAdmin();
     }
     public class UserAccessor : IUserAccessor
     {
@@ -39,6 +41,26 @@ namespace Services.Common.UserAccessor
             {
                 return null;
             }
+        }
+
+        public bool IsAdmin()
+        {
+            var user = _contextAccessor.HttpContext.User;
+            var roles = user.FindAll(ClaimTypes.Role).Select(x => x.Value);
+            if (roles.Contains("Admin"))
+                return true;
+
+            return false;
+        }
+
+        public bool IsMember()
+        {
+            var user = _contextAccessor.HttpContext.User;
+            var roles = user.FindAll(ClaimTypes.Role).Select(x => x.Value);
+            if (roles.Contains("IsMember"))
+                return true;
+
+            return false;
         }
     }
 }

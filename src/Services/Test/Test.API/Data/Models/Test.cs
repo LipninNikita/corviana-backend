@@ -11,5 +11,6 @@ namespace Test.API.Data.Models
         public string Name { get; set; }
         [Description("Semicolon separeted questions ids")]
         public string QuestionIds { get; set; }
+        public bool IsFree { get; set; }
     }
 }
