@@ -48,6 +48,8 @@ namespace EventBusRabbitMq
                 var message = Encoding.UTF8.GetString(body);
                 var @event = JsonConvert.DeserializeObject<TEvent>(message);
 
+                Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
                 using var scope = _serviceProvider.CreateScope();
                 var handler = (TEventHandler)scope.ServiceProvider.GetRequiredService(typeof(TEventHandler));
                 await handler.Handle(@event);
