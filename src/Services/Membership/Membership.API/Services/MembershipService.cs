@@ -26,6 +26,8 @@ namespace Membership.API.Services
         {
             var result = await _sber.RegisterOrderAsync(input);
 
+            await _dbContext.UserMemberships.AddAsync(new Data.Models.UserMembership() { OrderId = result.OrderId, IsValid = false, DtStart = DateTimeOffset.UtcNow, UserId = _userAccessor.GetUserId() });
+            await _dbContext.SaveChangesAsync();
             return result;
         }
 
@@ -38,15 +40,19 @@ namespace Membership.API.Services
             return new MemberInfo() { DtStart = membership.DtStart, DtEnd = membership.DtStart.AddMonths(1) };
         }
 
-        public async Task IsPayed(string orderId)
+        public async Task IsPayed()
         {
-            var result = _sber.GetOrderStatusAsync(orderId);
-            if(result.IsCompleted)
+            var userId = _userAccessor.GetUserId();
+            var membership = await _dbContext.UserMemberships.FirstOrDefaultAsync(x => x.UserId == userId);
+            var result = _sber.GetOrderStatusAsync(membership.OrderId);
+            if (result.IsCompleted)
             {
-                _bus.Publish(new MembershipBoughtEvent() { UserId = _userAccessor.GetUserId(), DtEnd = DateTimeOffset.UtcNow.AddMonths(1) });
+                _bus.Publish(new MembershipBoughtEvent() { UserId = userId, DtEnd = DateTimeOffset.UtcNow.AddMonths(1) });
+                membership.IsValid = true;
+                membership.DtStart = DateTimeOffset.UtcNow;
             }
 
-            await _dbContext.UserMemberships.AddAsync(new Data.Models.UserMembership() { IsValid = true , DtStart = DateTimeOffset.UtcNow, UserId = _userAccessor.GetUserId()});
+            _dbContext.UserMemberships.Update(membership);
             await _dbContext.SaveChangesAsync();
         }
     }

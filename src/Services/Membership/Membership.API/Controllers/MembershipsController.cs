@@ -18,17 +18,17 @@ namespace Membership.API.Controllers
         }
 
         [HttpGet]
+        [Route("Membership")]
         public async Task<IActionResult> Get() 
         {
             var result = await _membershipService.GetMembershipInfo();
             return Ok(result);
         }
 
-        [HttpPost]
-        [Route("{orderId}")]
-        public async Task<IActionResult> IsPayed(string orderId)
+        [HttpGet]
+        public async Task<IActionResult> IsPayed()
         {
-            await _membershipService.IsPayed(orderId);
+            await _membershipService.IsPayed();
 
             return Ok();
         }

@@ -10,5 +10,6 @@ namespace Membership.API.Data.Models
         public string UserId { get; set; }
         public bool IsValid { get; set; }
         public DateTimeOffset DtStart { get; set; }
+        public string OrderId { get; set; }
     }
 }

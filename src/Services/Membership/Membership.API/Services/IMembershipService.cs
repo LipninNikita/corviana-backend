@@ -5,7 +5,7 @@ namespace Membership.API.Services
     public interface IMembershipService
     {
         public Task<RegisterOutput> Buy(AddMembership input);
-        public Task IsPayed(string orderId);
+        public Task IsPayed();
         public Task<MemberInfo> GetMembershipInfo();
     }
 }
