@@ -7,6 +7,11 @@ namespace Point.API.Events.Handler
     public class QuestionCompletedEventHandler : IEventHandler<QuestionCompletedEvent>
     {
         private readonly AppDbContext _dbContext;
+        public QuestionCompletedEventHandler(AppDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public async Task Handle(QuestionCompletedEvent @event)
         {
             var amount = 0;
