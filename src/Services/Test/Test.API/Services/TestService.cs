@@ -67,6 +67,9 @@ namespace Test.API.Services
         {
             var result = await _dbContext.Tests.SingleOrDefaultAsync(x => x.Id == id);
 
+            if (result.IsFree == false && !_userAccessor.IsMember())
+                throw new BadHttpRequestException("Become a mamber to access that!!!");
+
             return result;
         }
     }

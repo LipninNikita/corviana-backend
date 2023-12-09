@@ -59,6 +59,10 @@ namespace Question.API.Services
         {
             var idsArr = ids.Split(';');
             var result = await _dbContext.Questions.Where(x => idsArr.Contains(x.Id.ToString())).ToListAsync();
+            if (!_userAccessor.IsMember() && result.Count() == 1 && result.First().IsFree == false)
+            {
+                throw new BadHttpRequestException("Be member to access that question");
+            }
 
             return result.Select(x => (QuestionOutput)x);
         }

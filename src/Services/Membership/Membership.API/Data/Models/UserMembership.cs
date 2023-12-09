@@ -9,5 +9,6 @@ namespace Membership.API.Data.Models
         public Guid Id { get; set; }
         public string UserId { get; set; }
         public bool IsValid { get; set; }
+        public DateTimeOffset DtStart { get; set; }
     }
 }

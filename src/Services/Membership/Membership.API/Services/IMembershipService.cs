@@ -6,5 +6,6 @@ namespace Membership.API.Services
     {
         public Task<RegisterOutput> Buy(AddMembership input);
         public Task IsPayed(string orderId);
+        public Task<MemberInfo> GetMembershipInfo();
     }
 }

@@ -20,7 +20,7 @@ namespace Question.API.Controllers
 
         [HttpPost]
         [Route("Answer")]
-        public async Task<IActionResult> Answer([FromBody]int QuestionId, bool IsSuccess)
+        public async Task<IActionResult> Answer([FromBody]int QuestionId, [FromBody]bool IsSuccess)
         {
             await _questionService.AnswerQuestion(QuestionId, IsSuccess);
             return Ok();
