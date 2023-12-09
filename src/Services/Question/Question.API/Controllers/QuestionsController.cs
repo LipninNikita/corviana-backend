@@ -44,7 +44,7 @@ namespace Question.API.Controllers
         }
 
         [HttpGet]
-        [Route("/Random")]
+        [Route("Random")]
         public async Task<IActionResult> GetRandom([FromQuery] QuestionTypeEnum? type, [FromQuery] QuestionLvlEnum? lvl)
         {
             var result = await _questionService.GetRandom(type, lvl);
