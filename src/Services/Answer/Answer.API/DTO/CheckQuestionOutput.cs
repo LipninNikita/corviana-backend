@@ -5,5 +5,6 @@
         public int IdQuestion { get; set; }
         public IEnumerable<Guid>? RightAnswers { get; set; }
         public IEnumerable<Guid>? WrongAnswers { get; set; }
+        public string Annotation { get; set; }
     }
 }

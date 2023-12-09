@@ -10,5 +10,6 @@ namespace Question.API.Data.Models
         public string Content { get; set; }
         public QuestionLvlEnum Level { get; set; }
         public QuestionTypeEnum Type { get; set; }
+        public bool IsFree { get; set; } 
     }
 }

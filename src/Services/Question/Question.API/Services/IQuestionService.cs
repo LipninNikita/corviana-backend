@@ -12,5 +12,6 @@ namespace Question.API.Services
         public Task<int> Add(AddQuestion input);
         public Task<int> Update(UpdateQuestion input);
         public Task Delete(int id);
+        public Task AnswerQuestion(int QuestionId, bool IsSuccess);
     }
 }

@@ -2,6 +2,8 @@
 using Question.API.Data;
 using Question.API.Data.Models;
 using Question.API.DTO;
+using Question.API.Events.Models;
+using Services.Common.UserAccessor;
 using System.Data.Entity;
 
 namespace Question.API.Services
@@ -9,9 +11,13 @@ namespace Question.API.Services
     public class QuestionService : IQuestionService
     {
         private readonly AppDbContext _dbContext;
-        public QuestionService(AppDbContext dbContext)
+        private readonly IEventBus _bus;
+        private readonly IUserAccessor _userAccessor;
+        public QuestionService(AppDbContext dbContext, IEventBus bus, IUserAccessor userAccessor)
         {
             _dbContext = dbContext;
+            _bus = bus;
+            _userAccessor = userAccessor;
         }
 
         public async Task<int> Add(AddQuestion input)
@@ -21,6 +27,18 @@ namespace Question.API.Services
             await _dbContext.SaveChangesAsync();
 
             return result.Id;
+        }
+
+        public async Task AnswerQuestion(int QuestionId, bool IsSuccess)
+        {
+            var userId = _userAccessor.GetUserId();
+            var question = await _dbContext.Questions.SingleOrDefaultAsync(x => x.Id == QuestionId);
+
+            var transaction = new Data.Models.UserQuestionTransaction();
+            transaction.UserId = userId;
+            transaction.QuestionId = QuestionId;
+
+            _bus.Publish(new QuestionCompeletedEvent() { QuestionId = question.Id, Level = (int)question.Level, UserId = userId });
         }
 
         public Task Delete(int id)

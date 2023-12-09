@@ -10,5 +10,6 @@ namespace Answer.API.Data.Models
         public int IdQuestion { get; set; }
         public string Content { get; set; }
         public bool IsRight { get; set; }
+        public string Annotation { get; set; }
     }
 }

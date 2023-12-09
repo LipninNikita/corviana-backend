@@ -7,6 +7,7 @@ namespace Answer.API.DTO
         public int IdQuestion { get; set; }
         public string Content { get; set; }
         public bool IsRight { get; set; }
+        public string Annotation { get; set; }
 
         public static implicit operator Data.Models.Answer(AddAnswer input)
         {
@@ -14,6 +15,7 @@ namespace Answer.API.DTO
             result.Content = input.Content;
             result.IsRight = input.IsRight;
             result.IdQuestion = input.IdQuestion;
+            result.Annotation = input.Annotation;
 
             return result;
         }

@@ -57,6 +57,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Membership.BackgroundTasks"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quest.BackgroundTasks", "src\Services\Quest\Quests.BackgroundTasks\Quest.BackgroundTasks.csproj", "{2951EDC2-50FE-4038-B7A9-0D9DD752EBBE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Statistic", "Statistic", "{FE9421E3-2FA5-4D35-A52F-DC5D1148BEBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Statistic.API", "src\Services\Statistic\Statistic.API\Statistic.API.csproj", "{49FCB764-3B02-4A6E-823E-4A3CD0CA62BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +119,10 @@ Global
 		{2951EDC2-50FE-4038-B7A9-0D9DD752EBBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2951EDC2-50FE-4038-B7A9-0D9DD752EBBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2951EDC2-50FE-4038-B7A9-0D9DD752EBBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49FCB764-3B02-4A6E-823E-4A3CD0CA62BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49FCB764-3B02-4A6E-823E-4A3CD0CA62BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49FCB764-3B02-4A6E-823E-4A3CD0CA62BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49FCB764-3B02-4A6E-823E-4A3CD0CA62BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -145,6 +153,8 @@ Global
 		{56AC61D6-A93D-4007-9BD3-3B4A5267BB4F} = {0712033D-CF9A-4585-992C-FC5726DE7C51}
 		{15628D7F-FC06-4960-88C1-51A4D505E136} = {0712033D-CF9A-4585-992C-FC5726DE7C51}
 		{2951EDC2-50FE-4038-B7A9-0D9DD752EBBE} = {226287A9-EC84-47CD-9011-D745A8C1AD73}
+		{FE9421E3-2FA5-4D35-A52F-DC5D1148BEBB} = {C6C7DED2-8263-444F-B796-E891E2B30405}
+		{49FCB764-3B02-4A6E-823E-4A3CD0CA62BD} = {FE9421E3-2FA5-4D35-A52F-DC5D1148BEBB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {41D89F08-D26A-46CC-90EA-1E678C03DE7A}

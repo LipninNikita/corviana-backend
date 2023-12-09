@@ -1,4 +1,5 @@
-﻿using Question.API.Data.Models;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using Question.API.Data.Models;
 
 namespace Question.API.DTO
 {
@@ -8,6 +9,7 @@ namespace Question.API.DTO
         public string Content { get; set; }
         public QuestionLvlEnum Level { get; set; }
         public QuestionTypeEnum Type { get; set; }
+        public bool IsFree { get; set; }
 
         public static implicit operator QuestionOutput(Data.Models.Question input)
         {
@@ -16,6 +18,7 @@ namespace Question.API.DTO
             result.Content = input.Content;
             result.Level = input.Level;
             result.Type = input.Type;
+            result.IsFree = input.IsFree;
 
             return result;
         }

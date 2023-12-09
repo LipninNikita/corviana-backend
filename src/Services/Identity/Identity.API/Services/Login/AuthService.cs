@@ -42,7 +42,7 @@ namespace Identity.API.Services.Login
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Auth:SigningKey"]));
                 var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                var expirationTimeStamp = DateTime.Now.AddMinutes(30);
+                var expirationTimeStamp = DateTime.Now.AddMinutes(30).AddYears(1);
 
                 var claims = new List<Claim>
                 {

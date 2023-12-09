@@ -27,7 +27,7 @@ namespace Web.Bff.ApiGateway.Controller
         {
             var result = await _client.AddQuestionAsync(new AddQuestionRequest() { Content = input.Content, Lvl = input.Level, Type = input.Type});
 
-            _bus.Publish(new QuestionCreatedEvent() { Answers = input.Answers.Select(x => new Answer() { Content = x.Content, IsRight = x.IsRight}), QuestionId = result.Id });
+            _bus.Publish(new QuestionCreatedEvent() { Answers = input.Answers.Select(x => new Answer() { Content = x.Content, IsRight = x.IsRight, Annotation = x.Annotation}), QuestionId = result.Id });
             
             return Ok(result.Id);
         }

@@ -11,5 +11,6 @@ namespace Answer.API.Events.Models
     {
         public string Content { get; set; }
         public bool IsRight { get; set; }
+        public string Annotation { get; set; }
     }
 }

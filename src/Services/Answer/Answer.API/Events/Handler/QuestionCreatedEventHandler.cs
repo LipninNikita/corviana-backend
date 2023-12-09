@@ -19,7 +19,7 @@ namespace Answer.API.Events.Handler
             var models = new List<AddAnswer>();
             foreach (var item in @event.Answers)
             {
-                models.Add(new AddAnswer() { Content = item.Content, IsRight = item.IsRight, IdQuestion = int.Parse(@event.QuestionId) });
+                models.Add(new AddAnswer() { Content = item.Content, IsRight = item.IsRight, IdQuestion = int.Parse(@event.QuestionId), Annotation = item.Annotation });
             }
 
             await _dbContext.Answers.AddRangeAsync(models.Select(x => (Data.Models.Answer)x));
