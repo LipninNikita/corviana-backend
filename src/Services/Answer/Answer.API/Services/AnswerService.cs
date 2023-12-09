@@ -32,7 +32,7 @@ namespace Answer.API.Services
             result.WrongAnswers = new List<Guid>(wrong);
             result.RightAnswers = new List<Guid>(right);
             result.IdQuestion = questionId;
-            result.Annotation = answers.SingleOrDefault().Annotation;
+            result.Annotation = answers.FirstOrDefault().Annotation;
 
             return result;
         }
