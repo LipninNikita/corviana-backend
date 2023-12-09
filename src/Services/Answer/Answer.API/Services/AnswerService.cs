@@ -22,17 +22,31 @@ namespace Answer.API.Services
 
         }
 
+        public async Task<CheckQuestionOutput> CheckQuestion(int questionId)
+        {
+            var result = new CheckQuestionOutput();
+            var answers = await _dbContext.Answers.Where(x => x.IdQuestion == questionId).ToListAsync();
+
+            var wrong = answers.Where(x => x.IsRight == false).Select(x => x.Id);
+            var right = answers.Where(x => x.IsRight == true).Select(x => x.Id);
+            result.WrongAnswers = new List<Guid>(wrong);
+            result.RightAnswers = new List<Guid>(right);
+            result.IdQuestion = questionId;
+
+            return result;
+        }
+
         public Task Delete(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<AnswerOutput> GetByIds(string ids)
+        public async Task<IEnumerable<AnswerOutput>> GetByIds(string ids)
         {
             var idsArr = ids.Split(';');
-            var result = await _dbContext.Answers.SingleOrDefaultAsync(x => idsArr.Contains(x.Id.ToString()));
+            var result = await _dbContext.Answers.Where(x => idsArr.Contains(x.Id.ToString())).ToListAsync();
 
-            return result;
+            return result.Select(x => (AnswerOutput)x);
         }
 
         public Task<IEnumerable<AnswerOutput>> GetByQuestionId(int id)

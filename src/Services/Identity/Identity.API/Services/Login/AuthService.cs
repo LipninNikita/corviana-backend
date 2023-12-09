@@ -35,7 +35,7 @@ namespace Identity.API.Services.Login
             await _userManager.AddToRoleAsync(user, Name);
         }
 
-        public async Task<bool> SignInAsync(SignInInput signInInputModel)
+        public async Task<string> SignInAsync(SignInInput signInInputModel)
         {
             var user = await _userManager.FindByEmailAsync(signInInputModel.Email);
             if (user != null)
@@ -65,7 +65,7 @@ namespace Identity.API.Services.Login
                 );
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
                 _httpContextAccessor.HttpContext.Response.Headers.Add("Token", tokenString);
-                return true;
+                return tokenString;
             }
 
             throw new UnauthorizedAccessException();

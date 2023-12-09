@@ -18,6 +18,22 @@ namespace Question.API.Controllers
             _questionService = questionService;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Add(AddQuestion input)
+        {
+            var result = await _questionService.Add(input);
+
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _questionService.GetAll();
+
+            return Ok(result);
+        }
+
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> Get([FromRoute]string id)

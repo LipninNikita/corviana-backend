@@ -17,10 +17,18 @@ namespace Answer.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(string ids) 
+        public async Task<IActionResult> Get([FromBody]string ids) 
         {
             var result = _answerService.GetByIds(ids);
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Check(int QuestionId)
+        {
+            var result = await _answerService.CheckQuestion(QuestionId);
+
+            return Ok(result);
         }
     }
 }

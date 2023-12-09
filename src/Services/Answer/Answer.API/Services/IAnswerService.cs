@@ -8,6 +8,7 @@ namespace Answer.API.Services
         public Task<Guid> Update(UpdateAnswer input);
         public Task Delete(Guid id);
         public Task<IEnumerable<AnswerOutput>> GetByQuestionId(int id);
-        public Task<AnswerOutput> GetByIds(string ids);
+        public Task<IEnumerable<AnswerOutput>> GetByIds(string ids);
+        public Task<CheckQuestionOutput> CheckQuestion(int questionId);
     }
 }

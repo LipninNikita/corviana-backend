@@ -28,6 +28,13 @@ namespace Question.API.Services
             throw new NotImplementedException();
         }
 
+        public async Task<IEnumerable<QuestionOutput>> GetAll()
+        {
+            var result = await _dbContext.Questions.ToListAsync();
+
+            return result.Select(x => (QuestionOutput)x);
+        }
+
         public async Task<IEnumerable<QuestionOutput>> GetByIds(string ids)
         {
             var idsArr = ids.Split(';');
