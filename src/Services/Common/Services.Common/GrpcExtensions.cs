@@ -45,6 +45,8 @@ namespace Services.Common
                 options.Address = new Uri(grpcConnString);
             });
 
+            builder.Services.AddTransient<TClient>();
+
             return builder;
         }
     }
