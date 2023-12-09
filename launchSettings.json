@@ -14,7 +14,8 @@
         "storage.api": "StartDebugging",
         "postcomments.api": "StartDebugging",
         "post.api": "StartDebugging",
-        "membership.backgroundtasks": "StartDebugging"
+        "membership.backgroundtasks": "StartDebugging",
+        "quest.backgroundtasks": "StartDebugging"
       }
     }
   }

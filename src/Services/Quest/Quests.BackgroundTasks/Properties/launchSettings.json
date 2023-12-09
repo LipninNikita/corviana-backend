@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Quests.BackgroundTasks": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

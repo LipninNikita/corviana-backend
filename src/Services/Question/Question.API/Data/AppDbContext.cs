@@ -9,5 +9,6 @@ namespace Question.API.Data
         {
         }
         public DbSet<Models.Question> Questions { get; set; }
+        public DbSet<Models.UserQuestionTransaction> UserQuestionTransactions { get; set; }
     }
 }

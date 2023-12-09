@@ -1,4 +1,5 @@
 ﻿using EventBusRabbitMq.Events;
+using Quartz;
 using Quest.BackgroundTasks.Events.Models;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,20 @@ namespace Quest.BackgroundTasks.Events.Handlers
 {
     public class QuestCreatedEventHandler : IEventHandler<QuestCreatedEvent>
     {
-        public Task Handle(QuestCreatedEvent @event)
+        private readonly IScheduler _scheduler;
+        public async Task Handle(QuestCreatedEvent @event)
         {
-            throw new NotImplementedException();
+            IJobDetail job = JobBuilder.Create<CheckQuestOverdueJob>()
+                .WithIdentity(nameof(@event) + "Job" + Guid.NewGuid(), "CheckMembership")
+                .Build();
+
+            ITrigger trigger = TriggerBuilder.Create()
+                .WithIdentity(nameof(@event) + "Trigger" + Guid.NewGuid(), "CheckMembership")
+                .StartAt(@event.DtEnd)
+                .UsingJobData("questId", @event.QuestId)
+            .Build();
+
+            await _scheduler.ScheduleJob(job, trigger);
         }
     }
 }

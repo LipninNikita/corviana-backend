@@ -66,6 +66,13 @@ services:
     ports:
     - "5004:80" 
 
+  quest.backgroundtasks:
+    image: ${DOCKER_REGISTRY-}questbackgroundtasks
+    build:
+      context: .
+      dockerfile: src/Services/Quest/Quests.BackgroundTasks/Dockerfile
+    environment:
+    - RabbitMQ=rabbitmq
   test.api:
     image: ${DOCKER_REGISTRY-}test.api
     container_name: test.api
@@ -143,6 +150,7 @@ services:
 volumes:
     corviana-backend-sqldata:
         driver: local
+
 
 
 
