@@ -8,8 +8,8 @@ services:
       context: .
       dockerfile: src/ApiGateways/Web.Bff/Web.Bff.ApiGateway/Dockerfile
     environment:
-    - RabbitMQ=51.250.23.40:5672
-    - QuestionsGrpc=http://51.250.23.40:6002
+    - RabbitMQ=rabbitmq
+    - QuestionsGrpc=http://question.api:6002
     ports:
     - "5000:80" 
 
