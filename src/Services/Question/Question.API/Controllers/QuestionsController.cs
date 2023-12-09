@@ -22,7 +22,7 @@ namespace Question.API.Controllers
         [Route("Answer")]
         public async Task<IActionResult> Answer([FromBody]AnswerInput input)
         {
-            await _questionService.AnswerQuestion(int.Parse(input.QuestionId), input.IsSuccess);
+            await _questionService.AnswerQuestion(input.QuestionId, input.IsSuccess);
             return Ok();
         }
 
