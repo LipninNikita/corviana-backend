@@ -17,7 +17,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.AddEventBus();
 
 builder.Services.AddTransient<IAnswerService, AnswerService>();
-
 builder.Services.AddTransient<QuestionCreatedEventHandler>();
 
 //builder.AddRedis();

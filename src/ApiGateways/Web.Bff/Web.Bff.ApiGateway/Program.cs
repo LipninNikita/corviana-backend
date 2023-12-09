@@ -12,7 +12,7 @@ builder.Services.AddReverseProxy()
 
 builder.AddEventBus();
 
-builder.AddGrpcClient<QuestionsGrpcServiceClient>(builder.Configuration["QuestionsGrpc"]);
+builder.AddGrpcClient<QuestionsGrpcService.QuestionsGrpcServiceClient>(builder.Configuration["QuestionsGrpc"]);
 
 var app = builder.Build();
 

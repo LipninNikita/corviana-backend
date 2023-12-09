@@ -17,13 +17,15 @@ namespace Answer.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromBody]string ids) 
+        [Route("{ids}")]
+        public async Task<IActionResult> Get([FromRoute]string ids) 
         {
-            var result = _answerService.GetByIds(ids);
-            return Ok();
+            var result = await _answerService.GetByIds(ids);
+            return Ok(result);
         }
 
         [HttpGet]
+        [Route("Check")]
         public async Task<IActionResult> Check(int QuestionId)
         {
             var result = await _answerService.CheckQuestion(QuestionId);

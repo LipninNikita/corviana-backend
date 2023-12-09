@@ -14,9 +14,9 @@ namespace Web.Bff.ApiGateway.Controller
     public class QuestionsController : ControllerBase
     {
         private readonly IEventBus _bus;
-        private readonly QuestionsGrpcServiceClient _client;
+        private readonly QuestionsGrpcService.QuestionsGrpcServiceClient _client;
 
-        public QuestionsController(IEventBus bus, QuestionsGrpcServiceClient client)
+        public QuestionsController(IEventBus bus, QuestionsGrpcService.QuestionsGrpcServiceClient client)
         {
             _bus = bus;
             _client = client;
