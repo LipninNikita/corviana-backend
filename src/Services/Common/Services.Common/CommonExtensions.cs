@@ -46,7 +46,7 @@ namespace Services.Common
 
             app.MapControllers().RequireAuthorization();
 
-            app.UseCors(x => { x.AllowAnyOrigin(); x.AllowAnyHeader(); x.AllowAnyMethod(); x.SetIsOriginAllowed(x => true);x.WithOrigins("http://localhost:5173", "http://*:5173", "http://*:*", "http://localhost:*"); });
+            app.UseCors(x => { x.AllowAnyOrigin(); x.AllowAnyHeader(); x.AllowAnyMethod(); x.SetIsOriginAllowed(x => true);x.WithOrigins("http://localhost:5173", "http://*:5173", "http://*:*", "http://localhost:*", "https://hackaton.codarecord.ru"); });
 
             app.UseMvc().UseMvcWithDefaultRoute();
 
