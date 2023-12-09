@@ -1,3 +1,4 @@
+using EventBusRabbitMq;
 using Services.Common;
 using Web.Bff.ApiGateway.Services;
 
@@ -7,6 +8,8 @@ builder.AddServiceDefaults();
 
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+
+builder.AddEventBus();
 
 builder.AddGrpcClient<QuestionsGrpcServiceClient>(builder.Configuration["QuestionsGrpc"]);
 
