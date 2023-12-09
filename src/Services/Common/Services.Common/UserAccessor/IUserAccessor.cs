@@ -27,8 +27,10 @@ namespace Services.Common.UserAccessor
 
         public string? GetUserId()
         {
-            var token = new JwtSecurityTokenHandler().ReadJwtToken(jwt);
-            var userId = token.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            //var token = new JwtSecurityTokenHandler().ReadJwtToken(jwt);
+            var user = _contextAccessor.HttpContext.User;
+            var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
             if (userId != null)
             {
                 return userId;
