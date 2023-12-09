@@ -44,8 +44,14 @@ namespace Answer.API.Services
 
         public async Task<IEnumerable<AnswerOutput>> GetByIds(string ids)
         {
+            var result = new List<Data.Models.Answer>();
             var idsArr = ids.Split(';');
-            var result = await _dbContext.Answers.Where(x => idsArr.Contains(x.Id.ToString())).ToListAsync();
+            foreach (var id in idsArr)
+            {
+                var entity = await _dbContext.Answers.Where(x => x.IdQuestion == int.Parse(id)).FirstOrDefaultAsync();
+                result.Add(entity);
+            }
+            //var result = await _dbContext.Answers.Where(x => idsArr.Contains(x.Id.ToString())).ToListAsync();
 
             return result.Select(x => (AnswerOutput)x);
         }
