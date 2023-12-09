@@ -1,10 +1,10 @@
 ﻿using EventBusRabbitMq;
+using Microsoft.EntityFrameworkCore;
 using Question.API.Data;
 using Question.API.Data.Models;
 using Question.API.DTO;
 using Question.API.Events.Models;
 using Services.Common.UserAccessor;
-using System.Data.Entity;
 
 namespace Question.API.Services
 {
