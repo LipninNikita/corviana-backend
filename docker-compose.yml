@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: src/ApiGateways/Web.Bff/Web.Bff.ApiGateway/Dockerfile
     environment:
-    - RabbitMQ=rabbitmq:5672
+    - RabbitMQ=rabbitmq
     - QuestionsGrpc=questions.api:6002 
     ports:
     - "5000:80" 
@@ -21,7 +21,7 @@ services:
       dockerfile: src/Services/Identity/Identity.API/Dockerfile
     environment:
     - ConnectionString=Server=sqldata;Database=IdentityDb;User Id=admin;Password=Qwerty123
-    - RabbitMQ=rabbitmq:5672
+    - RabbitMQ=rabbitmq
     - Cache=cachedata
     ports:
     - "5001:80"  
