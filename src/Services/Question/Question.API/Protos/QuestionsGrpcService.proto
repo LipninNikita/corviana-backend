@@ -12,6 +12,7 @@ message AddQuestionRequest {
   string content = 1;
   int32 type = 2;
   int32 lvl = 3;
+  bool isFree = 4;
 }
  
 message AddQuestionResponse {

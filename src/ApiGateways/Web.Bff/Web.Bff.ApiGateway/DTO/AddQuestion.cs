@@ -6,5 +6,6 @@
         public int Level { get; set; }
         public int Type { get; set; }
         public IEnumerable<AddAnswer> Answers { get; set; }
+        public bool IsFree { get; set; }
     }
 }

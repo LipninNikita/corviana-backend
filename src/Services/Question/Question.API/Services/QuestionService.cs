@@ -38,7 +38,7 @@ namespace Question.API.Services
             transaction.UserId = userId;
             transaction.QuestionId = QuestionId;
 
-            _bus.Publish(new QuestionCompeletedEvent() { QuestionId = question.Id, Level = (int)question.Level, UserId = userId });
+            _bus.Publish(new QuestionCompletedEvent() { QuestionId = question.Id.ToString(), Level = (int)question.Level, UserId = userId });
         }
 
         public Task Delete(int id)

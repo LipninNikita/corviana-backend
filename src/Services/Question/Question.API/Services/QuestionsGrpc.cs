@@ -14,7 +14,13 @@ namespace Question.API.Services
 
         public override async Task<AddQuestionResponse> AddQuestion(AddQuestionRequest request, ServerCallContext context)
         {
-            var result = await _questionService.Add(new AddQuestion() { Content = request.Content, Level = (Data.Models.QuestionLvlEnum)request.Lvl, Type = (Data.Models.QuestionTypeEnum)request.Type });
+            var result = await _questionService.Add(
+                new AddQuestion() 
+                { 
+                    Content = request.Content, 
+                    Level = (Data.Models.QuestionLvlEnum)request.Lvl, 
+                    Type = (Data.Models.QuestionTypeEnum)request.Type, 
+                    IsFree =  request.IsFree });
 
             var response = new AddQuestionResponse();
             response.Id = result.ToString();

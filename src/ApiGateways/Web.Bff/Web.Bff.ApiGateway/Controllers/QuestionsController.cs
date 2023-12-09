@@ -25,7 +25,7 @@ namespace Web.Bff.ApiGateway.Controller
         [HttpPost]
         public async Task<IActionResult> Add(AddQuestion input)
         {
-            var result = await _client.AddQuestionAsync(new AddQuestionRequest() { Content = input.Content, Lvl = input.Level, Type = input.Type});
+            var result = await _client.AddQuestionAsync(new AddQuestionRequest() { Content = input.Content, Lvl = input.Level, Type = input.Type, IsFree = input.IsFree});
 
             _bus.Publish(new QuestionCreatedEvent() { Answers = input.Answers.Select(x => new Answer() { Content = x.Content, IsRight = x.IsRight, Annotation = x.Annotation}), QuestionId = result.Id });
             

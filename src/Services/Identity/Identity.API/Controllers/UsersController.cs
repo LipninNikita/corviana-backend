@@ -33,5 +33,14 @@ namespace Identity.API.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet]
+        [Route("UserId")]
+        public async Task<IActionResult> GetUserId()
+        {
+            var result = await _userService.GetUserId();
+
+            return Ok(result);
+        }
     }
 }

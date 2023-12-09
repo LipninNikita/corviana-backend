@@ -1,6 +1,6 @@
 ﻿using EventBusRabbitMq.Events;
 
-namespace Question.API.Events.Models
+namespace Quest.API.Events.Models
 {
     public class QuestionCompeletedEvent : Event
     {

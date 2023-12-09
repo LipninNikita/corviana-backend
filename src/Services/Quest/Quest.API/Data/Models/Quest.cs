@@ -9,9 +9,11 @@ namespace Quest.API.Data.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public int TimesToFinish {  get; set; }
+        public int CurrentAmount { get; set; }
         public string IdUser { get; set; }
         public bool IsFinished { get; set; }
         public bool IsSucceed { get; set; }
+        public int Level { get; set; }
         public QuestLifeTime QuestLifeTime { get; set; }
         public QuestType QuestType { get; set; }
         public DateTimeOffset DtCreated { get; set; } = DateTimeOffset.UtcNow;

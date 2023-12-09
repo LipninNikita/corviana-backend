@@ -20,6 +20,8 @@ namespace Question.API.Events.Handlers
             {
                 await _dbContext.UserQuestionTransactions.AddAsync(new Data.Models.UserQuestionTransaction() { QuestionId = int.Parse(questionId), UserId = @event.UserId });
             }
+
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
