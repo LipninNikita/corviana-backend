@@ -26,6 +26,8 @@ namespace EventBusRabbitMq
             var message = JsonConvert.SerializeObject(@event);
             var body = Encoding.UTF8.GetBytes(message);
 
+            Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
             _channel.ExchangeDeclare(exchangeName, ExchangeType.Fanout);
             _channel.BasicPublish(exchangeName, "", null, body);
         }
