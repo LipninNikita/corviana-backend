@@ -1,13 +1,24 @@
 ﻿using EventBusRabbitMq.Events;
+using Point.API.Data;
 using Point.API.Events.Models;
 
 namespace Point.API.Events.Handler
 {
     public class QuestionCompletedEventHandler : IEventHandler<QuestionCompletedEvent>
     {
-        public Task Handle(QuestionCompletedEvent @event)
+        private readonly AppDbContext _dbContext;
+        public async Task Handle(QuestionCompletedEvent @event)
         {
-            throw new NotImplementedException();
+            var amount = 0;
+            if (@event.Level == 0)
+                amount = 10;
+            else if (@event.Level == 1)
+                amount = 30;
+            else if (@event.Level == 2)
+                amount = 50;
+
+            await _dbContext.PointTransactions.AddAsync(new Data.Models.PointTransaction() { Amount = amount, UserId = @event.UserId });
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
