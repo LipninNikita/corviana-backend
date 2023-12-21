@@ -53,10 +53,14 @@ namespace EventBusRabbitMq
                 var message = Encoding.UTF8.GetString(body);
                 var @event = JsonConvert.DeserializeObject<TEvent>(message);
 
-                Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                _logger.LogInformation($"Event {exchangeName} received at {queueName}");
 
-                var handler = ActivatorUtilities.CreateInstance<TEventHandler>(_serviceProvider);
+                var handler = ActivatorUtilities.GetServiceOrCreateInstance<TEventHandler>(_serviceProvider);
                 var result = await handler.Handle(@event);
+                if (result)
+                    _logger.LogInformation($"Event {exchangeName} successfully consumed");
+                else
+                    _logger.LogInformation($"Event {exchangeName} failed with an error");
             };
 
             _channel.BasicConsume(queueName, autoAck: true, consumer: consumer);

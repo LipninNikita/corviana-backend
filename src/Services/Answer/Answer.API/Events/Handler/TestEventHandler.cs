@@ -8,15 +8,20 @@ namespace Answer.API.Events.Handler
     public class TestEventHandler : IEventHandler<TestEvent>
     {
         private readonly IAnswerService _service;
-        public TestEventHandler(IAnswerService service)
+        private readonly AppDbContext _appDbContext;
+        public TestEventHandler(IAnswerService service, AppDbContext appDbContext)
         {
             _service = service;
+            _appDbContext = appDbContext;
         }
 
         public async Task<bool> Handle(TestEvent @event)
         {
-            var result = await _service.Add(new DTO.AddAnswer() { Annotation = "aaa", Content = "aaaa", IdQuestion = 1, IsRight = false });
-            await Console.Out.WriteLineAsync(@event.Message + result);
+            var model = new DTO.AddAnswer() { Annotation = "aaa", Content = "aaaa", IdQuestion = 1, IsRight = false };
+            var result = await _service.Add(model);
+            await Console.Out.WriteLineAsync("Added via service");
+            await _appDbContext.Answers.AddAsync(model);
+            await Console.Out.WriteLineAsync("Added via dbContext");
             return true;
         }
     }

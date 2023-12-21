@@ -20,5 +20,10 @@ namespace Membership.API.Events.Handler
             membership.IsValid = false;
             await _dbContext.SaveChangesAsync();
         }
+
+        Task<bool> IEventHandler<MembershipOverdueEvent>.Handle(MembershipOverdueEvent @event)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

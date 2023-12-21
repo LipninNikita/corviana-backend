@@ -15,7 +15,7 @@ namespace Answer.API.Events.Handler
             _dbContext = dbContext;
         }
 
-        public async Task Handle(QuestionCreatedEvent @event)
+        public async Task<bool> Handle(QuestionCreatedEvent @event)
         {
             if(@event.Answers != null && @event.Answers.Count() > 0)
             {
@@ -30,6 +30,8 @@ namespace Answer.API.Events.Handler
             }
             else
                 throw new InvalidInputDataException();
+
+            return true;
         }
     }
 }

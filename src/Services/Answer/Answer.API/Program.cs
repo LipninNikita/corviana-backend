@@ -17,7 +17,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.AddEventBus();
 
 builder.Services.AddTransient<IAnswerService, AnswerService>();
-builder.Services.AddTransient<QuestionCreatedEventHandler>();
 
 //builder.AddRedis();
 
@@ -29,7 +28,7 @@ app.UseServiceDefaults();
 
 var bus = app.Services.GetRequiredService<IEventBus>();
 bus.Subscribe<QuestionCreatedEvent, QuestionCreatedEventHandler>();
-bus.Subscribe<QuestionCreatedEvent, QuestionCreatedEventHandler>();
+bus.Subscribe<TestEvent, TestEventHandler>();
 
 using (var scope = app.Services.CreateScope())
 {
