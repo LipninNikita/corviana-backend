@@ -3,6 +3,6 @@
     public interface IEventHandler<in TEvent>
             where TEvent : Event
     {
-        Task Handle(TEvent @event);
+        Task<bool> Handle(TEvent @event);
     }
 }

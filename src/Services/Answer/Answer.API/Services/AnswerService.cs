@@ -1,6 +1,7 @@
 ﻿using Answer.API.Data;
 using Answer.API.DTO;
 using Microsoft.EntityFrameworkCore;
+using Services.Common.Middlewares.Exceptions;
 
 namespace Answer.API.Services
 {
@@ -56,9 +57,13 @@ namespace Answer.API.Services
             return result.Select(x => (AnswerOutput)x);
         }
 
-        public Task<IEnumerable<AnswerOutput>> GetByQuestionId(int id)
+        public async Task<IEnumerable<AnswerOutput>> GetByQuestionId(int id)
         {
-            throw new NotImplementedException();
+            var data = await _dbContext.Answers.Where(x => x.IdQuestion == id).ToListAsync();
+            if (data.Count == 0)
+                throw new ContentNotFoundException();
+
+            return data.Select(x => (AnswerOutput)x);
         }
 
         public Task<Guid> Update(UpdateAnswer input)

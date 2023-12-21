@@ -1,5 +1,6 @@
 ﻿using EventBusRabbitMq.Events;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -12,11 +13,13 @@ namespace EventBusRabbitMq
     public class EventBusRabbitMq : IEventBus
     {
         private readonly IModel _channel;
+        private readonly ILogger<EventBusRabbitMq> _logger;
         private readonly IServiceProvider _serviceProvider;
 
-        public EventBusRabbitMq(IModel channel, IServiceProvider serviceProvider)
+        public EventBusRabbitMq(IModel channel, ILogger<EventBusRabbitMq> logger, IServiceProvider serviceProvider)
         {
             _channel = channel;
+            _logger = logger;
             _serviceProvider = serviceProvider;
         }
 
@@ -50,12 +53,10 @@ namespace EventBusRabbitMq
                 var message = Encoding.UTF8.GetString(body);
                 var @event = JsonConvert.DeserializeObject<TEvent>(message);
 
-                Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
-                using var scope = _serviceProvider.CreateScope();
-                var handler = (TEventHandler)scope.ServiceProvider.GetRequiredService(typeof(TEventHandler));
-                await handler.Handle(@event);
-                scope.Dispose();
+                var handler = ActivatorUtilities.CreateInstance<TEventHandler>(_serviceProvider);
+                var result = await handler.Handle(@event);
             };
 
             _channel.BasicConsume(queueName, autoAck: true, consumer: consumer);

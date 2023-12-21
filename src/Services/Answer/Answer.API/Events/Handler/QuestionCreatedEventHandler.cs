@@ -2,6 +2,7 @@
 using Answer.API.DTO;
 using Answer.API.Events.Models;
 using EventBusRabbitMq.Events;
+using Services.Common.Middlewares.Exceptions;
 
 namespace Answer.API.Events.Handler
 {
@@ -16,14 +17,19 @@ namespace Answer.API.Events.Handler
 
         public async Task Handle(QuestionCreatedEvent @event)
         {
-            var models = new List<AddAnswer>();
-            foreach (var item in @event.Answers)
+            if(@event.Answers != null && @event.Answers.Count() > 0)
             {
-                models.Add(new AddAnswer() { Content = item.Content, IsRight = item.IsRight, IdQuestion = int.Parse(@event.QuestionId), Annotation = item.Annotation });
-            }
+                var models = new List<Data.Models.Answer>();
 
-            await _dbContext.Answers.AddRangeAsync(models.Select(x => (Data.Models.Answer)x));
-            await _dbContext.SaveChangesAsync();
+                foreach (var item in @event.Answers)
+                {
+                    models.Add(new AddAnswer() { Content = item.Content, IsRight = item.IsRight, IdQuestion = int.Parse(@event.QuestionId), Annotation = item.Annotation });
+                }
+                await _dbContext.Answers.AddRangeAsync(models);
+                await _dbContext.SaveChangesAsync();
+            }
+            else
+                throw new InvalidInputDataException();
         }
     }
 }

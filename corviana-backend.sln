@@ -51,19 +51,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.API", "src\Services\Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Membership", "Membership", "{0712033D-CF9A-4585-992C-FC5726DE7C51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Membership.API", "src\Services\Membership\Membership.API\Membership.API.csproj", "{56AC61D6-A93D-4007-9BD3-3B4A5267BB4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Membership.API", "src\Services\Membership\Membership.API\Membership.API.csproj", "{56AC61D6-A93D-4007-9BD3-3B4A5267BB4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Membership.BackgroundTasks", "src\Services\Membership\Membership.BackgroundTasks\Membership.BackgroundTasks.csproj", "{15628D7F-FC06-4960-88C1-51A4D505E136}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Membership.BackgroundTasks", "src\Services\Membership\Membership.BackgroundTasks\Membership.BackgroundTasks.csproj", "{15628D7F-FC06-4960-88C1-51A4D505E136}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quest.BackgroundTasks", "src\Services\Quest\Quests.BackgroundTasks\Quest.BackgroundTasks.csproj", "{2951EDC2-50FE-4038-B7A9-0D9DD752EBBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quest.BackgroundTasks", "src\Services\Quest\Quests.BackgroundTasks\Quest.BackgroundTasks.csproj", "{2951EDC2-50FE-4038-B7A9-0D9DD752EBBE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Statistic", "Statistic", "{FE9421E3-2FA5-4D35-A52F-DC5D1148BEBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Statistic.API", "src\Services\Statistic\Statistic.API\Statistic.API.csproj", "{49FCB764-3B02-4A6E-823E-4A3CD0CA62BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Statistic.API", "src\Services\Statistic\Statistic.API\Statistic.API.csproj", "{49FCB764-3B02-4A6E-823E-4A3CD0CA62BD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Point", "Point", "{CC81EE30-1B2D-4016-ADE5-0412ABB68053}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Point.API", "src\Services\Point\Point.API\Point.API.csproj", "{2DD95519-C317-423C-97DF-3AE66701C018}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Point.API", "src\Services\Point\Point.API\Point.API.csproj", "{2DD95519-C317-423C-97DF-3AE66701C018}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Answer.Unit.Tests", "src\Services\Answer\Answer.Tests\Answer.Unit.Tests.csproj", "{CC005EB0-3F1A-406D-997E-E0A8453409CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,6 +133,10 @@ Global
 		{2DD95519-C317-423C-97DF-3AE66701C018}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DD95519-C317-423C-97DF-3AE66701C018}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DD95519-C317-423C-97DF-3AE66701C018}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC005EB0-3F1A-406D-997E-E0A8453409CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC005EB0-3F1A-406D-997E-E0A8453409CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC005EB0-3F1A-406D-997E-E0A8453409CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC005EB0-3F1A-406D-997E-E0A8453409CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -165,6 +171,7 @@ Global
 		{49FCB764-3B02-4A6E-823E-4A3CD0CA62BD} = {FE9421E3-2FA5-4D35-A52F-DC5D1148BEBB}
 		{CC81EE30-1B2D-4016-ADE5-0412ABB68053} = {C6C7DED2-8263-444F-B796-E891E2B30405}
 		{2DD95519-C317-423C-97DF-3AE66701C018} = {CC81EE30-1B2D-4016-ADE5-0412ABB68053}
+		{CC005EB0-3F1A-406D-997E-E0A8453409CE} = {888252C6-AF07-4150-AD4A-7CFD3DEFB38F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {41D89F08-D26A-46CC-90EA-1E678C03DE7A}

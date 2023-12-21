@@ -1,4 +1,6 @@
-﻿using Answer.API.Services;
+﻿using Answer.API.Events.Models;
+using Answer.API.Services;
+using EventBusRabbitMq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +12,12 @@ namespace Answer.API.Controllers
     public class AnswersController : ControllerBase
     {
         private readonly IAnswerService _answerService;
+        private readonly IEventBus _bus;
 
-        public AnswersController(IAnswerService answerService)
+        public AnswersController(IAnswerService answerService, IEventBus bus)
         {
             _answerService = answerService;
+            _bus = bus;
         }
 
         [HttpGet]
@@ -31,6 +35,13 @@ namespace Answer.API.Controllers
             var result = await _answerService.CheckQuestion(QuestionId);
 
             return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Test()
+        {
+            _bus.Publish(new TestEvent() { Message = "Hail world!" });
+            return Ok();
         }
     }
 }

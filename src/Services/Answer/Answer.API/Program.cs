@@ -29,6 +29,7 @@ app.UseServiceDefaults();
 
 var bus = app.Services.GetRequiredService<IEventBus>();
 bus.Subscribe<QuestionCreatedEvent, QuestionCreatedEventHandler>();
+bus.Subscribe<QuestionCreatedEvent, QuestionCreatedEventHandler>();
 
 using (var scope = app.Services.CreateScope())
 {

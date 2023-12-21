@@ -4,10 +4,10 @@ namespace Answer.API.DTO
 {
     public class AddAnswer
     {
-        public int IdQuestion { get; set; }
-        public string Content { get; set; }
-        public bool IsRight { get; set; }
-        public string Annotation { get; set; }
+        public required int IdQuestion { get; set; }
+        public required string Content { get; set; }
+        public required bool IsRight { get; set; }
+        public required string Annotation { get; set; }
 
         public static implicit operator Data.Models.Answer(AddAnswer input)
         {

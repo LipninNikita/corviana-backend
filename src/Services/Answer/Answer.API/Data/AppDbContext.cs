@@ -8,6 +8,10 @@ namespace Answer.API.Data
         {
         }
 
-        public DbSet<Models.Answer> Answers { get; set; }
+        public AppDbContext()
+        {
+        }
+
+        public virtual DbSet<Models.Answer> Answers { get; set; }
     }
 }
