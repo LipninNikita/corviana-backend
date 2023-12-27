@@ -18,6 +18,7 @@ namespace Question.API.Controllers
             _questionService = questionService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

@@ -19,6 +19,7 @@ namespace Answer.API.Controllers
             _answerService = answerService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("/GetAnswersByQuestionId/{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)
