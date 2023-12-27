@@ -7,9 +7,8 @@ namespace Answer.API.Data.Models
     {
         [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        public int IdQuestion { get; set; }
+        public int QuestionId { get; set; }
         public string Content { get; set; }
         public bool IsRight { get; set; }
-        public string Annotation { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace Answer.API.DTO
         {
             var result = new AnswerOutput();
             result.Id = input.Id;
-            result.IdQuestion = input.IdQuestion;
+            result.IdQuestion = input.QuestionId;
             result.Content = input.Content;
             result.IsRight = input.IsRight;
 

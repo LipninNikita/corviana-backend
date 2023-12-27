@@ -12,7 +12,12 @@ namespace Quest.BackgroundTasks.Events.Handlers
     public class QuestCreatedEventHandler : IEventHandler<QuestCreatedEvent>
     {
         private readonly IScheduler _scheduler;
-        public async Task Handle(QuestCreatedEvent @event)
+        public QuestCreatedEventHandler(IScheduler scheduler)
+        {
+            _scheduler = scheduler;
+        }
+
+        public async Task<bool> Handle(QuestCreatedEvent @event)
         {
             IJobDetail job = JobBuilder.Create<CheckQuestOverdueJob>()
                 .WithIdentity(nameof(@event) + "Job" + Guid.NewGuid(), "CheckMembership")
@@ -25,6 +30,8 @@ namespace Quest.BackgroundTasks.Events.Handlers
             .Build();
 
             await _scheduler.ScheduleJob(job, trigger);
+
+            return true;
         }
     }
 }

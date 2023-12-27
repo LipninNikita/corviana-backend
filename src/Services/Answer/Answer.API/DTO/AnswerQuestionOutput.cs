@@ -1,10 +1,10 @@
 ﻿namespace Answer.API.DTO
 {
-    public class CheckQuestionOutput
+    public class AnswerQuestionOutput
     {
-        public int IdQuestion { get; set; }
+        public int QuestionId { get; set; }
         public IEnumerable<Guid>? RightAnswers { get; set; }
         public IEnumerable<Guid>? WrongAnswers { get; set; }
-        public string Annotation { get; set; }
+        public bool IsSuccess {  get; set; }
     }
 }

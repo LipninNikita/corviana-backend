@@ -4,7 +4,6 @@
     {
         OneAnswer = 0,
         ManyAnswers = 1,
-        HandWriteAnswer = 2,
-        CodeAnswer = 3,
+        CodeAnswer = 2,
     }
 }

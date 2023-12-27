@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Question.API.Data.Models;
 
 namespace Question.API.Data
 {
@@ -9,6 +8,5 @@ namespace Question.API.Data
         {
         }
         public DbSet<Models.Question> Questions { get; set; }
-        public DbSet<Models.UserQuestionTransaction> UserQuestionTransactions { get; set; }
     }
 }

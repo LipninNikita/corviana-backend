@@ -18,7 +18,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.AddEventBus();
 
 builder.Services.AddTransient<IMembershipService, MembershipService>();
-builder.Services.AddTransient<MembershipOverdueEventHandler>();
 
 //builder.AddRedis();
 

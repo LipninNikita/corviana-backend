@@ -22,72 +22,18 @@ namespace Question.API.Services
 
         public async Task<int> Add(AddQuestion input)
         {
-            Data.Models.Question result = input;
-            await _dbContext.Questions.AddAsync(result);
+            Data.Models.Question model = input;
+            await _dbContext.Questions.AddAsync(model);
             await _dbContext.SaveChangesAsync();
 
-            return result.Id;
-        }
-
-        public async Task AnswerQuestion(int QuestionId, bool IsSuccess)
-        {
-            var userId = _userAccessor.GetUserId();
-            var question = await _dbContext.Questions.SingleOrDefaultAsync(x => x.Id == QuestionId);
-
-            var transaction = new Data.Models.UserQuestionTransaction();
-            transaction.UserId = userId;
-            transaction.QuestionId = QuestionId;
-            await _dbContext.UserQuestionTransactions.AddAsync(transaction);
-            await _dbContext.SaveChangesAsync();
-
-            _bus.Publish(new QuestionCompletedEvent() { QuestionId = question.Id.ToString(), Level = (int)question.Level, UserId = userId, IsSuccess = IsSuccess });
-        }
-
-        public Task Delete(int id)
-        {
-            throw new NotImplementedException();
+            return model.Id;
         }
 
         public async Task<IEnumerable<QuestionOutput>> GetAll()
         {
-            var result = await _dbContext.Questions.ToListAsync();
-
-            return result.Select(x => (QuestionOutput)x);
-        }
-
-        public async Task<IEnumerable<QuestionOutput>> GetByIds(string ids)
-        {
-            var idsArr = ids.Split(';');
-            var result = await _dbContext.Questions.Where(x => idsArr.Contains(x.Id.ToString())).ToListAsync();
-            if (!_userAccessor.IsMember() && result.Count() == 1 && result.First().IsFree == false)
-            {
-                throw new BadHttpRequestException("Be member to access that question");
-            }
-
-            return result.Select(x => (QuestionOutput)x);
-        }
-
-        public async Task<QuestionOutput> GetRandom(QuestionTypeEnum? type, QuestionLvlEnum? lvl)
-        {
-            var query = _dbContext.Questions.AsQueryable();
-
-            if (type != null)
-                query.Where(x => x.Type == type);
-
-            if (lvl != null)
-                query.Where(x => x.Level == lvl);
-
-            var amount = await query.CountAsync();
-            var randomizedSkip = new Random().Next(0, amount);
-
-            var result = await query.Skip(randomizedSkip).Take(1).SingleOrDefaultAsync();
+            var result = await _dbContext.Questions.Select(x => (QuestionOutput)x).ToListAsync();
 
             return result;
-        }
-
-        public Task<int> Update(UpdateQuestion input)
-        {
-            throw new NotImplementedException();
         }
     }
 }

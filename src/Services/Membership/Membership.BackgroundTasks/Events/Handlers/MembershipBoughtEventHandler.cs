@@ -17,7 +17,7 @@ namespace Membership.BackgroundTasks.Events.Handlers
             _scheduler = scheduler;
         }
 
-        public async Task Handle(MembershipBoughtEvent @event)
+        public async Task<bool> Handle(MembershipBoughtEvent @event)
         {
             IJobDetail job = JobBuilder.Create<CheckMembershipOverdueJob>()
                      .WithIdentity(nameof(@event) + "Job" + Guid.NewGuid(), "CheckMembership")
@@ -30,6 +30,8 @@ namespace Membership.BackgroundTasks.Events.Handlers
                 .Build();
 
             await _scheduler.ScheduleJob(job, trigger);
+
+            return true;
         }
     }
 }

@@ -13,10 +13,12 @@ namespace Statistic.API.Events.Handler
             _dbContext = dbContext;
         }
 
-        public async Task Handle(QuestionCompeletedEvent @event)
+        public async Task<bool> Handle(QuestionCompeletedEvent @event)
         {
             await _dbContext.Statistics.AddAsync(new Data.Models.UserStatistic() { DtCreated = DateTimeOffset.UtcNow, UserId = @event.UserId });
             await _dbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 }

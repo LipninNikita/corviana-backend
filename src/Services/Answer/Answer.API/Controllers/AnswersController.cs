@@ -12,36 +12,27 @@ namespace Answer.API.Controllers
     public class AnswersController : ControllerBase
     {
         private readonly IAnswerService _answerService;
-        private readonly IEventBus _bus;
 
-        public AnswersController(IAnswerService answerService, IEventBus bus)
+        public AnswersController(IAnswerService answerService)
         {
             _answerService = answerService;
-            _bus = bus;
         }
 
         [HttpGet]
-        [Route("{ids}")]
-        public async Task<IActionResult> Get([FromRoute]string ids) 
+        [Route("/GetAnswersByQuestionId/{id}")]
+        public async Task<IActionResult> Get([FromRoute]int id) 
         {
-            var result = await _answerService.GetByIds(ids);
+            var result = await _answerService.GetByQuestionId(id);
             return Ok(result);
         }
 
         [HttpGet]
-        [Route("Check")]
+        [Route("/CheckAnswersByQuestionId/{id}")]
         public async Task<IActionResult> Check(int QuestionId)
         {
-            var result = await _answerService.CheckQuestion(QuestionId);
+            var result = await _answerService.Answer(QuestionId);
 
             return Ok(result);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Test()
-        {
-            _bus.Publish(new TestEvent() { Message = "Hail world!" });
-            return Ok();
         }
     }
 }

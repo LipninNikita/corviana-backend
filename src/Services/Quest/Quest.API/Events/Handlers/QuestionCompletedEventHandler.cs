@@ -17,7 +17,7 @@ namespace Quest.API.Events.Handlers
             _bus = bus;
         }
 
-        public async Task Handle(QuestionCompeletedEvent @event)
+        public async Task<bool> Handle(QuestionCompeletedEvent @event)
         {
             var quests = await _dbContext.Quests.Where(x => x.IdUser == @event.UserId).Where(x => x.IsFinished == false).Where(x => x.Level == @event.Level).Where(x => x.QuestType == Data.Models.QuestType.FinishQuestion).ToListAsync();
 
@@ -37,6 +37,8 @@ namespace Quest.API.Events.Handlers
 
                 await _dbContext.SaveChangesAsync();
             }
+
+            return true;
         }
     }
 }

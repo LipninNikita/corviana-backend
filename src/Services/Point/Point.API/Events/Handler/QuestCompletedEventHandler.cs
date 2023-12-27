@@ -15,7 +15,7 @@ namespace Point.API.Events.Handler
             _dbContext = dbContext;
         }
 
-        public async Task Handle(QuestCompletedEvent @event)
+        public async Task<bool> Handle(QuestCompletedEvent @event)
         {
             var amount = 0;
             if (@event.Level == 0)
@@ -27,6 +27,8 @@ namespace Point.API.Events.Handler
 
             await _dbContext.PointTransactions.AddAsync(new Data.Models.PointTransaction() { Amount = amount, UserId = @event.UserId });
             await _dbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 }

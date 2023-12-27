@@ -14,9 +14,11 @@ namespace Identity.API.Events.Handlers
             _authService = authService;
         }
 
-        public async Task Handle(MembershipBoughtEvent @event)
+        public async Task<bool> Handle(MembershipBoughtEvent @event)
         {
             await _authService.AddToTole("IsMember", @event.UserId);
+
+            return true;
         }
     }
 }

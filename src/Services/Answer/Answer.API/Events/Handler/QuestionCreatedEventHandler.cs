@@ -23,7 +23,7 @@ namespace Answer.API.Events.Handler
 
                 foreach (var item in @event.Answers)
                 {
-                    models.Add(new AddAnswer() { Content = item.Content, IsRight = item.IsRight, IdQuestion = int.Parse(@event.QuestionId), Annotation = item.Annotation });
+                    models.Add(new AddAnswer() { Content = item.Content, IsRight = item.IsRight, IdQuestion = int.Parse(@event.QuestionId) });
                 }
                 await _dbContext.Answers.AddRangeAsync(models);
                 await _dbContext.SaveChangesAsync();

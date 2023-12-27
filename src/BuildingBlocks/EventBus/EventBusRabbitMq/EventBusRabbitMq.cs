@@ -9,7 +9,6 @@ using System.Text;
 namespace EventBusRabbitMq
 {
     //TODO: Use MassTransit instead
-    //Subscribe should be register before building app
     public class EventBusRabbitMq : IEventBus
     {
         private readonly IModel _channel;
@@ -29,7 +28,7 @@ namespace EventBusRabbitMq
             var message = JsonConvert.SerializeObject(@event);
             var body = Encoding.UTF8.GetBytes(message);
 
-            Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            _logger.LogInformation($"Event {exchangeName} published");
 
             _channel.ExchangeDeclare(exchangeName, ExchangeType.Fanout);
             _channel.BasicPublish(exchangeName, "", null, body);
@@ -49,18 +48,24 @@ namespace EventBusRabbitMq
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += async (model, ea) =>
             {
-                var body = ea.Body.ToArray();
-                var message = Encoding.UTF8.GetString(body);
-                var @event = JsonConvert.DeserializeObject<TEvent>(message);
+                try
+                {
+                    var body = ea.Body.ToArray();
+                    var message = Encoding.UTF8.GetString(body);
+                    var @event = JsonConvert.DeserializeObject<TEvent>(message);
 
-                _logger.LogInformation($"Event {exchangeName} received at {queueName}");
+                    _logger.LogInformation($"Event {exchangeName} received at {queueName}");
 
-                var handler = ActivatorUtilities.GetServiceOrCreateInstance<TEventHandler>(_serviceProvider);
-                var result = await handler.Handle(@event);
-                if (result)
-                    _logger.LogInformation($"Event {exchangeName} successfully consumed");
-                else
-                    _logger.LogInformation($"Event {exchangeName} failed with an error");
+                    var handler = ActivatorUtilities.GetServiceOrCreateInstance<TEventHandler>(_serviceProvider);
+                    var result = await handler.Handle(@event);
+
+                    if (result)
+                        _logger.LogInformation($"Event {exchangeName} successfully consumed");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogInformation($"Event {exchangeName} failed with an error: {ex.Message}");
+                }
             };
 
             _channel.BasicConsume(queueName, autoAck: true, consumer: consumer);

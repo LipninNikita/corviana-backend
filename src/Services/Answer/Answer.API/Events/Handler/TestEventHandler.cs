@@ -17,11 +17,12 @@ namespace Answer.API.Events.Handler
 
         public async Task<bool> Handle(TestEvent @event)
         {
-            var model = new DTO.AddAnswer() { Annotation = "aaa", Content = "aaaa", IdQuestion = 1, IsRight = false };
+            var model = new DTO.AddAnswer() {Content = "aaaa", IdQuestion = 1, IsRight = false };
             var result = await _service.Add(model);
             await Console.Out.WriteLineAsync("Added via service");
             await _appDbContext.Answers.AddAsync(model);
             await Console.Out.WriteLineAsync("Added via dbContext");
+
             return true;
         }
     }

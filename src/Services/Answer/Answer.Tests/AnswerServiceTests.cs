@@ -18,7 +18,7 @@ namespace Answer.Tests
         public AnswerServiceTests()
         {
             var fixture = new Fixture();
-            var dataFixture = fixture.Build<API.Data.Models.Answer>().With(x => x.IdQuestion, 1).CreateMany(5);
+            var dataFixture = fixture.Build<API.Data.Models.Answer>().With(x => x.QuestionId, 1).CreateMany(5);
 
             var dbContextMock = new Mock<AppDbContext>();
             dbContextMock.Setup(x => x.Answers).ReturnsDbSet(dataFixture);
@@ -32,7 +32,6 @@ namespace Answer.Tests
         {
             // Arrange
             Fixture fixture = new Fixture();
-
             var sut = fixture.Create<AddAnswer>();
 
             var data = await _answerServiceMock.Object.Add(sut);
