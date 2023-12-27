@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Services.Common.Middlewares.Exceptions;
 using Services.Common.UserAccessor;
 using Statistic.API.Data;
 using Statistic.API.Data.Models;
@@ -18,11 +19,11 @@ namespace Statistic.API.Services
 
         public async Task<bool> Add(AddStatistic input)
         {
-            var model = new QuestionStatistic() { IsRightAnswered = input.IsRightAnswered, QuestionId = input.QuestionId, UserId = input.UserId};
+            var model = new QuestionStatistic() { IsRightAnswered = input.IsRightAnswered, QuestionId = input.QuestionId, UserId = input.UserId };
 
             var isExists = await _dbContext.QuestionStatistics.Where(x => x.UserId == input.UserId & x.QuestionId == input.QuestionId & x.IsRightAnswered == input.IsRightAnswered).AnyAsync();
 
-            if(!isExists)
+            if (!isExists)
             {
                 await _dbContext.QuestionStatistics.AddAsync(model);
                 await _dbContext.SaveChangesAsync();
@@ -42,34 +43,33 @@ namespace Statistic.API.Services
                         WrongAnswers = g.Where(x => x.IsRightAnswered == false).Count()
                     }).FirstOrDefaultAsync();
 
+            if (result is null || result == default)
+                throw new ContentNotFoundException();
+
             result.QuestionId = id;
-
-            //var result = new QuestionStatisticOutput();
-
-            //var query = _dbContext.QuestionStatistics.Where(x => x.QuestionId == id).AsQueryable();
-
-            //result.RightAnswers = await query.Where(x => x.IsRightAnswered == true).CountAsync();
-            //result.WrongAnswers = await query.Where(x => x.IsRightAnswered == false).CountAsync();
-            //result.QuestionId = id;
 
             return result;
         }
 
         public async Task<IEnumerable<UserStatisticOutput>> GetUserStatistics(DateTime dtStart, DateTime dtEnd, string? userId = null)
         {
-            if(userId == null)
+            if (userId == null)
                 userId = _userAccessor.GetUserId();
 
+            var isAdmin = _userAccessor.IsAdmin();
+            if (!isAdmin || userId != _userAccessor.GetUserId())
+                throw new ForbiddenException("Unable to get other user statistics");
+
             List<UserStatisticOutput> statistics = await _dbContext.QuestionStatistics
-                .Where(s => s.UserId == userId && s.DtCreated.Date >= dtEnd && s.DtCreated.Date <= dtStart)
-                .GroupBy(s => s.UserId)
-                .Select(g => new UserStatisticOutput
-                {
-                    UserId = g.Key,
-                    TotalAnswersToday = g.Count(),
-                    Date = dtStart
-                })
-                .ToListAsync();
+            .Where(s => s.UserId == userId && s.DtCreated.Date >= dtEnd && s.DtCreated.Date <= dtStart)
+            .GroupBy(s => s.UserId)
+            .Select(g => new UserStatisticOutput
+            {
+                UserId = g.Key,
+                TotalAnswersToday = g.Count(),
+                Date = dtStart
+            })
+            .ToListAsync();
 
             return statistics;
         }
