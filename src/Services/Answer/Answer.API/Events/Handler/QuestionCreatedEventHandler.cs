@@ -1,35 +1,25 @@
-﻿using Answer.API.Data;
-using Answer.API.DTO;
+﻿using Answer.API.DTO;
 using Answer.API.Events.Models;
+using Answer.API.Services;
 using EventBusRabbitMq.Events;
-using Services.Common.Middlewares.Exceptions;
 
 namespace Answer.API.Events.Handler
 {
     public class QuestionCreatedEventHandler : IEventHandler<QuestionCreatedEvent>
     {
-        private readonly AppDbContext _dbContext;
+        private readonly IAnswerService _answerService;
 
-        public QuestionCreatedEventHandler(AppDbContext dbContext)
+        public QuestionCreatedEventHandler(IAnswerService answerService)
         {
-            _dbContext = dbContext;
+            _answerService = answerService;
         }
 
         public async Task<bool> Handle(QuestionCreatedEvent @event)
         {
-            if(@event.Answers != null && @event.Answers.Count() > 0)
+            foreach (var answer in @event.Answers)
             {
-                var models = new List<Data.Models.Answer>();
-
-                foreach (var item in @event.Answers)
-                {
-                    models.Add(new AddAnswer() { Content = item.Content, IsRight = item.IsRight, IdQuestion = int.Parse(@event.QuestionId) });
-                }
-                await _dbContext.Answers.AddRangeAsync(models);
-                await _dbContext.SaveChangesAsync();
+                await _answerService.Add(new AddAnswer() { Content = answer.Content, IdQuestion = @event.QuestionId, IsRight = answer.IsRight });
             }
-            else
-                throw new InvalidInputDataException();
 
             return true;
         }

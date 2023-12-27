@@ -16,10 +16,18 @@ namespace Statistic.API.Controllers
             _statisticService = statisticService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetUserStatistic()
+        [HttpGet, Route("UserStatistics/{userId}")]
+        public async Task<IActionResult> GetUserStatistic([FromQuery] DateTime dtStart, [FromQuery] DateTime dtEnd, [FromRoute] string userId)
         {
-            var result = await _statisticService.GetUserStatistic();
+            var result = await _statisticService.GetUserStatistics(dtStart, dtEnd, userId);
+
+            return Ok(result);
+        }
+
+        [HttpGet, Route("QuestionStatistics/{id}")]
+        public async Task<IActionResult> GetQuestionStatistic(int id)
+        {
+            var result = await _statisticService.GetQuestionStatistics(id);
 
             return Ok(result);
         }

@@ -7,8 +7,9 @@ namespace Statistic.API.Data.Models
     {
         [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        public int AnswerId { get; set; }
+        public int QuestionId { get; set; }
         public string UserId { get; set; }
-        public string AnsweredRight { get; set; }
+        public bool IsRightAnswered { get; set; }
+        public DateTimeOffset DtCreated { get; set; } = DateTimeOffset.UtcNow;
     }
 }

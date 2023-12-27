@@ -8,5 +8,6 @@ namespace Question.API.Services
     {
         public Task<IEnumerable<QuestionOutput>> GetAll();
         public Task<int> Add(AddQuestion input);
+        public Task<string> GetHintByQuestionId(int id);
     }
 }

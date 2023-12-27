@@ -10,11 +10,13 @@ service QuestionsGrpcService {
  
 message AddQuestionRequest {
   string content = 1;
-  int32 type = 2;
-  int32 lvl = 3;
-  bool isFree = 4;
+  string title = 2;
+  int32 type = 3;
+  int32 lvl = 4;
+  bool isFree = 5;
+  string Hint = 6;
 }
  
 message AddQuestionResponse {
-  string id = 1;
+  int32 id = 1;
 }

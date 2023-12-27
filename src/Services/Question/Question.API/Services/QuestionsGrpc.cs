@@ -17,13 +17,16 @@ namespace Question.API.Services
             var result = await _questionService.Add(
                 new AddQuestion() 
                 { 
+                    Title = request.Title,
                     Content = request.Content, 
                     Level = (Data.Models.QuestionLvlEnum)request.Lvl, 
                     Type = (Data.Models.QuestionTypeEnum)request.Type, 
-                    IsFree =  request.IsFree });
+                    IsFree =  request.IsFree ,
+                    Hint = request.Hint
+                });
 
             var response = new AddQuestionResponse();
-            response.Id = result.ToString();
+            response.Id = result;
             return response;
         }
     }

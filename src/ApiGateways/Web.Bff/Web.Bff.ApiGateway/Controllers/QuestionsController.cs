@@ -1,6 +1,7 @@
 ﻿using EventBusRabbitMq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage;
 using Questions.API.Grpc.Services;
 using Web.Bff.ApiGateway.DTO;
 using Web.Bff.ApiGateway.Events.Models;
@@ -25,9 +26,9 @@ namespace Web.Bff.ApiGateway.Controller
         [HttpPost]
         public async Task<IActionResult> Add(AddQuestion input)
         {
-            var result = await _client.AddQuestionAsync(new AddQuestionRequest() { Content = input.Content, Lvl = input.Level, Type = input.Type, IsFree = input.IsFree});
+            var result = await _client.AddQuestionAsync(new AddQuestionRequest() { Title = input.Title, Content = input.Content, Lvl = input.Level, Type = input.Type, IsFree = input.IsFree, Hint = input.Hint});
 
-            _bus.Publish(new QuestionCreatedEvent() { Answers = input.Answers.Select(x => new Answer() { Content = x.Content, IsRight = x.IsRight, Annotation = x.Annotation}), QuestionId = result.Id });
+            _bus.Publish(new QuestionCreatedEvent() { Answers = input.Answers.Select(x => new Answer() { Content = x.Content, IsRight = x.IsRight}), QuestionId = result.Id });
             
             return Ok(result.Id);
         }

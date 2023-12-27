@@ -8,6 +8,6 @@ namespace Statistic.API.Data
         {
         }
 
-        public DbSet<Models.UserStatistic> Statistics { get; set; }
+        public DbSet<Models.QuestionStatistic> QuestionStatistics { get; set; }
     }
 }

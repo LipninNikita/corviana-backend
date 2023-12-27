@@ -1,4 +1,5 @@
-﻿using Answer.API.Events.Models;
+﻿using Answer.API.DTO;
+using Answer.API.Events.Models;
 using Answer.API.Services;
 using EventBusRabbitMq;
 using Microsoft.AspNetCore.Authorization;
@@ -20,17 +21,17 @@ namespace Answer.API.Controllers
 
         [HttpGet]
         [Route("/GetAnswersByQuestionId/{id}")]
-        public async Task<IActionResult> Get([FromRoute]int id) 
+        public async Task<IActionResult> Get([FromRoute] int id)
         {
             var result = await _answerService.GetByQuestionId(id);
             return Ok(result);
         }
 
-        [HttpGet]
-        [Route("/CheckAnswersByQuestionId/{id}")]
-        public async Task<IActionResult> Check(int QuestionId)
+        [HttpPut]
+        [Route("/Question/{id}/Answer")]
+        public async Task<IActionResult> Check([FromRoute] int id, [FromBody] IEnumerable<Guid> SelectedAnswers)
         {
-            var result = await _answerService.Answer(QuestionId);
+            var result = await _answerService.Answer(new AnswerQuestionInput() { QuestionId = id, SelectedAnswers = SelectedAnswers});
 
             return Ok(result);
         }

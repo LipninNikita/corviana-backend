@@ -11,13 +11,9 @@ namespace Question.API.Services
     public class QuestionService : IQuestionService
     {
         private readonly AppDbContext _dbContext;
-        private readonly IEventBus _bus;
-        private readonly IUserAccessor _userAccessor;
-        public QuestionService(AppDbContext dbContext, IEventBus bus, IUserAccessor userAccessor)
+        public QuestionService(AppDbContext dbContext)
         {
             _dbContext = dbContext;
-            _bus = bus;
-            _userAccessor = userAccessor;
         }
 
         public async Task<int> Add(AddQuestion input)
@@ -34,6 +30,13 @@ namespace Question.API.Services
             var result = await _dbContext.Questions.Select(x => (QuestionOutput)x).ToListAsync();
 
             return result;
+        }
+
+        public async Task<string> GetHintByQuestionId(int id)
+        {
+            var hint = await _dbContext.Questions.Where(x => x.Id == id).Select(x => x.Hint).FirstOrDefaultAsync();
+
+            return hint;
         }
     }
 }

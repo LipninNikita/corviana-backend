@@ -40,9 +40,11 @@ namespace Services.Common.Middlewares
             switch (exception)
             {
                 case ContentNotFoundException ex:
+                    exception = ex;
                     response.StatusCode = (int)HttpStatusCode.NotFound;
                     break;
                 case InvalidInputDataException ex:
+                    exception = ex;
                     response.StatusCode = (int)HttpStatusCode.BadRequest;
                     break;
                 default:

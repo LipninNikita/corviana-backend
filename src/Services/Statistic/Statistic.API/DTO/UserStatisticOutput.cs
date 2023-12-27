@@ -1,14 +1,16 @@
-﻿namespace Statistic.API.DTO
+﻿using Statistic.API.Data.Models;
+
+namespace Statistic.API.DTO
 {
-    public class StatisticOutput
+    public class UserStatisticOutput
     {
         public string UserId { get; set; }
         public int TotalAnswersToday { get; set; }
         public DateTimeOffset Date { get; set; }
 
-        public static implicit operator StatisticOutput(Data.Models.UserStatistic input)
+        public static implicit operator UserStatisticOutput(QuestionStatistic input)
         {
-            var result = new StatisticOutput();
+            var result = new UserStatisticOutput();
             result.UserId = input.UserId;
             result.Date = input.DtCreated;
 

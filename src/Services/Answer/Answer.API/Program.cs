@@ -1,5 +1,4 @@
 using Answer.API.Data;
-using Answer.API.Events.Handler;
 using Answer.API.Events.Models;
 using Answer.API.Services;
 using EventBusRabbitMq;
@@ -27,8 +26,7 @@ var app = builder.Build();
 app.UseServiceDefaults();
 
 var bus = app.Services.GetRequiredService<IEventBus>();
-bus.Subscribe<QuestionCreatedEvent, QuestionCreatedEventHandler>();
-bus.Subscribe<TestEvent, TestEventHandler>();
+
 
 using (var scope = app.Services.CreateScope())
 {

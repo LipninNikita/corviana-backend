@@ -2,7 +2,7 @@
 
 namespace Statistic.API.Events.Models
 {
-    public class QuestionCompeletedEvent : Event
+    public class QuestionAnsweredSuccessfulEvent : Event
     {
         public int QuestionId { get; set; }
         public int Level { get; set; }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Services.Common.UserAccessor;
 using Statistic.API.Data;
+using Statistic.API.Data.Models;
 using Statistic.API.DTO;
 
 namespace Statistic.API.Services
@@ -15,23 +16,60 @@ namespace Statistic.API.Services
             _userAccessor = userAccessor;
         }
 
-        public async Task<IEnumerable<StatisticOutput>> GetUserStatistic()
+        public async Task<bool> Add(AddStatistic input)
         {
-            var userId = _userAccessor.GetUserId();
+            var model = new QuestionStatistic() { IsRightAnswered = input.IsRightAnswered, QuestionId = input.QuestionId, UserId = input.UserId};
 
-            DateTimeOffset twoWeeksAgo = DateTimeOffset.UtcNow.Date.AddDays(-14);
-            DateTimeOffset today = DateTimeOffset.UtcNow.Date;
+            var isExists = await _dbContext.QuestionStatistics.Where(x => x.UserId == input.UserId & x.QuestionId == input.QuestionId & x.IsRightAnswered == input.IsRightAnswered).AnyAsync();
 
-            List<StatisticOutput> statistics = _dbContext.Statistics
-                .Where(s => s.UserId == userId && s.DtCreated.Date >= twoWeeksAgo && s.DtCreated.Date <= today)
+            if(!isExists)
+            {
+                await _dbContext.QuestionStatistics.AddAsync(model);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return true;
+        }
+
+        public async Task<QuestionStatisticOutput> GetQuestionStatistics(int id)
+        {
+            var result = await _dbContext.QuestionStatistics
+                    .Where(x => x.QuestionId == id)
+                    .GroupBy(x => x.IsRightAnswered)
+                    .Select(g => new QuestionStatisticOutput
+                    {
+                        RightAnswers = g.Where(x => x.IsRightAnswered == true).Count(),
+                        WrongAnswers = g.Where(x => x.IsRightAnswered == false).Count()
+                    }).FirstOrDefaultAsync();
+
+            result.QuestionId = id;
+
+            //var result = new QuestionStatisticOutput();
+
+            //var query = _dbContext.QuestionStatistics.Where(x => x.QuestionId == id).AsQueryable();
+
+            //result.RightAnswers = await query.Where(x => x.IsRightAnswered == true).CountAsync();
+            //result.WrongAnswers = await query.Where(x => x.IsRightAnswered == false).CountAsync();
+            //result.QuestionId = id;
+
+            return result;
+        }
+
+        public async Task<IEnumerable<UserStatisticOutput>> GetUserStatistics(DateTime dtStart, DateTime dtEnd, string? userId = null)
+        {
+            if(userId == null)
+                userId = _userAccessor.GetUserId();
+
+            List<UserStatisticOutput> statistics = await _dbContext.QuestionStatistics
+                .Where(s => s.UserId == userId && s.DtCreated.Date >= dtEnd && s.DtCreated.Date <= dtStart)
                 .GroupBy(s => s.UserId)
-                .Select(g => new StatisticOutput
+                .Select(g => new UserStatisticOutput
                 {
                     UserId = g.Key,
                     TotalAnswersToday = g.Count(),
-                    Date = today
+                    Date = dtStart
                 })
-                .ToList();
+                .ToListAsync();
 
             return statistics;
         }

@@ -18,14 +18,6 @@ namespace Question.API.Controllers
             _questionService = questionService;
         }
 
-        [HttpPost]
-        [Route("Answer")]
-        public async Task<IActionResult> Answer([FromBody]AnswerInput input)
-        {
-            await _questionService.AnswerQuestion(input.QuestionId, input.IsSuccess);
-            return Ok();
-        }
-
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -34,20 +26,10 @@ namespace Question.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<IActionResult> Get([FromRoute]string id)
+        [HttpGet, Route("/{id}/Hint")]
+        public async Task<IActionResult> GetHint([FromRoute]int id)
         {
-            var result = await _questionService.GetByIds(id);
-
-            return Ok(result);
-        }
-
-        [HttpGet]
-        [Route("Random")]
-        public async Task<IActionResult> GetRandom([FromQuery] QuestionTypeEnum? type, [FromQuery] QuestionLvlEnum? lvl)
-        {
-            var result = await _questionService.GetRandom(type, lvl);
+            var result = await _questionService.GetHintByQuestionId(id);
 
             return Ok(result);
         }
