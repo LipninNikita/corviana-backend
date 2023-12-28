@@ -3,8 +3,8 @@ using Questions.API.Grpc.Services;
 
 namespace Web.Bff.ApiGateway.Services
 {
-    public class QuestionsGrpcServiceClient
+    public class QuestionsGrpcServiceClient : QuestionsGrpcService.QuestionsGrpcServiceClient
     {
-  
+
     }
 }

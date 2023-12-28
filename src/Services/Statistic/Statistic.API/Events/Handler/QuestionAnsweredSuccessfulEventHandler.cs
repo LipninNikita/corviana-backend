@@ -1,15 +1,15 @@
-﻿using EventBusRabbitMq.Events;
-using Statistic.API.DTO;
+﻿using Statistic.API.DTO;
 using Statistic.API.Events.Models;
 using Statistic.API.Services;
+using EventBusRabbitMq.Events;
 
 namespace Statistic.API.Events.Handler
 {
-    public class QuestionAnsweredSuccesfullEventHandler : IEventHandler<QuestionAnsweredSuccessfulEvent>
+    public class QuestionAnsweredSuccessfulEventHandler : IEventHandler<QuestionAnsweredSuccessfulEvent>
     {
         private readonly IStatisticService _statisticService;
 
-        public QuestionAnsweredSuccesfullEventHandler(IStatisticService statisticService)
+        public QuestionAnsweredSuccessfulEventHandler(IStatisticService statisticService)
         {
             _statisticService = statisticService;
         }

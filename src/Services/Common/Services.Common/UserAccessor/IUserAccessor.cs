@@ -19,7 +19,7 @@ namespace Services.Common.UserAccessor
         public UserAccessor(IHttpContextAccessor httpContextAccessor)
         {
             _contextAccessor = httpContextAccessor;
-            jwt = _contextAccessor.HttpContext.Request.Headers["Authorization"];
+            //jwt = _contextAccessor.HttpContext.Request.Headers["Authorization"];
         }
 
         public string GetUserEmail()

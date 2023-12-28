@@ -9,7 +9,7 @@ services:
       dockerfile: src/ApiGateways/Web.Bff/Web.Bff.ApiGateway/Dockerfile
     environment:
     - RabbitMQ=rabbitmq
-    - QuestionsGrpc=http://question.api:6002
+    - QuestionsGrpc=http://192.168.0.10:6002
     ports:
     - "5000:80" 
 
@@ -135,6 +135,19 @@ services:
     - Cache=cachedata
     ports:
     - "5008:80" 
+      
+  statistic.api:
+    image: ${DOCKER_REGISTRY-}statistic.api
+    container_name: statistic.api
+    build:
+      context: .
+      dockerfile: src/Services/Statistic/Statistic.API/Dockerfile
+    environment:
+    - ConnectionString=Server=sqldata;Database=StatisticDB;User Id=admin;Password=Qwerty123
+    - RabbitMQ=rabbitmq
+    - Cache=cachedata
+    ports:
+    - "5009:80" 
 
   sqldata:
     image: postgres:13.3
@@ -178,6 +191,7 @@ services:
 volumes:
     corviana-backend-sqldata:
         driver: local
+
 
 
 

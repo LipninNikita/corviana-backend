@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EventBusRabbitMq;
+using Microsoft.EntityFrameworkCore;
 using Services.Common.Middlewares.Exceptions;
 using Services.Common.UserAccessor;
 using Statistic.API.Data;
@@ -11,10 +12,12 @@ namespace Statistic.API.Services
     {
         private readonly AppDbContext _dbContext;
         private readonly IUserAccessor _userAccessor;
-        public StatisticService(AppDbContext dbContext, IUserAccessor userAccessor)
+        private readonly IEventBus _bus;
+        public StatisticService(AppDbContext dbContext, IUserAccessor userAccessor, IEventBus bus)
         {
             _dbContext = dbContext;
             _userAccessor = userAccessor;
+            _bus = bus;
         }
 
         public async Task<bool> Add(AddStatistic input)
@@ -56,22 +59,23 @@ namespace Statistic.API.Services
             if (userId == null)
                 userId = _userAccessor.GetUserId();
 
-            var isAdmin = _userAccessor.IsAdmin();
-            if (!isAdmin || userId != _userAccessor.GetUserId())
-                throw new ForbiddenException("Unable to get other user statistics");
+            //TODO:throws other user or allow access for admin (_userAccessor.IsAdmin();)
 
-            List<UserStatisticOutput> statistics = await _dbContext.QuestionStatistics
-            .Where(s => s.UserId == userId && s.DtCreated.Date >= dtEnd && s.DtCreated.Date <= dtStart)
-            .GroupBy(s => s.UserId)
-            .Select(g => new UserStatisticOutput
-            {
-                UserId = g.Key,
-                TotalAnswersToday = g.Count(),
-                Date = dtStart
-            })
+            var statistics = await _dbContext.QuestionStatistics
+            .Where(s => s.UserId == userId && s.DtCreated.Date < dtEnd && s.DtCreated.Date > dtStart)
             .ToListAsync();
 
-            return statistics;
+            await Console.Out.WriteLineAsync("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            statistics.ForEach(x => { Console.WriteLine(x.DtCreated); });
+
+            var result = statistics.GroupBy(x => x.DtCreated.Date).Select(x => new UserStatisticOutput
+            {
+                UserId = x.Single().UserId,
+                Date = x.Key.Date,
+                TotalAnswersToday = x.Count()
+            });
+
+            return result;
         }
     }
 }

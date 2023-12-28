@@ -65,6 +65,7 @@ namespace EventBusRabbitMq
                 catch (Exception ex)
                 {
                     _logger.LogInformation($"Event {exchangeName} failed with an error: {ex.Message}");
+                    throw;
                 }
             };
 

@@ -21,7 +21,7 @@ namespace Answer.API.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("/GetAnswersByQuestionId/{id}")]
+        [Route("GetAnswersByQuestionId/{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
             var result = await _answerService.GetByQuestionId(id);
@@ -29,7 +29,7 @@ namespace Answer.API.Controllers
         }
 
         [HttpPut]
-        [Route("/Question/{id}/Answer")]
+        [Route("Question/{id}/Answer")]
         public async Task<IActionResult> Check([FromRoute] int id, [FromBody] IEnumerable<Guid> SelectedAnswers)
         {
             var result = await _answerService.Answer(new AnswerQuestionInput() { QuestionId = id, SelectedAnswers = SelectedAnswers});

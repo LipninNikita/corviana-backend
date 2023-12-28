@@ -12,7 +12,7 @@ namespace Statistic.API.DTO
         {
             var result = new UserStatisticOutput();
             result.UserId = input.UserId;
-            result.Date = input.DtCreated;
+            result.Date = input.DtCreated.Date;
 
             return result;
         }

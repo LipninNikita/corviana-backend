@@ -16,7 +16,8 @@
         "post.api": "StartDebugging",
         "membership.backgroundtasks": "StartDebugging",
         "quest.backgroundtasks": "StartDebugging",
-        "point.api": "StartDebugging"
+        "point.api": "StartDebugging",
+        "statistic.api": "StartDebugging"
       }
     }
   }

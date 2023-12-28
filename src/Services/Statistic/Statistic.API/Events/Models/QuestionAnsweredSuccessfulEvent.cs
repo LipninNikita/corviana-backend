@@ -6,6 +6,6 @@ namespace Statistic.API.Events.Models
     {
         public int QuestionId { get; set; }
         public int Level { get; set; }
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
     }
 }

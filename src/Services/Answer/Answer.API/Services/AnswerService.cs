@@ -4,6 +4,7 @@ using Answer.API.Events.Models;
 using EventBusRabbitMq;
 using Microsoft.EntityFrameworkCore;
 using Services.Common.Middlewares.Exceptions;
+using Services.Common.UserAccessor;
 
 namespace Answer.API.Services
 {
@@ -11,10 +12,12 @@ namespace Answer.API.Services
     {
         private readonly AppDbContext _dbContext;
         private readonly IEventBus _bus;
-        public AnswerService(AppDbContext dbContext, IEventBus bus)
+        private readonly IUserAccessor _userAccessor;
+        public AnswerService(AppDbContext dbContext, IEventBus bus, IUserAccessor userAccessor)
         {
             _dbContext = dbContext;
             _bus = bus;
+            _userAccessor = userAccessor;
         }
 
         public async Task<Guid> Add(AddAnswer input)
@@ -38,17 +41,18 @@ namespace Answer.API.Services
 
             var result = new AnswerQuestionOutput() { IsSuccess = false, QuestionId = input.QuestionId, RightAnswers = rightAnswers.Select(x => x.Id), WrongAnswers = wrongAnswers.Select(x => x.Id) };
 
+            var userId = _userAccessor.GetUserId();
             if (numberOfRightAnswered == totalRightAnswers)
             {
                 result.IsSuccess = true;
 
-                var questionAnsweredSuccessfulEvent = new QuestionAnsweredSuccessfulEvent() { QuestionId = input.QuestionId};
+                var questionAnsweredSuccessfulEvent = new QuestionAnsweredSuccessfulEvent() { QuestionId = input.QuestionId, UserId = userId };
                 _bus.Publish(questionAnsweredSuccessfulEvent);
 
                 return result;
             }
 
-            var questionAnsweredWrongEvent = new QuestionAnsweredWrongEvent() { QuestionId= input.QuestionId};
+            var questionAnsweredWrongEvent = new QuestionAnsweredWrongEvent() { QuestionId= input.QuestionId, UserId = userId };
             _bus.Publish(questionAnsweredWrongEvent);
 
             return result;
@@ -56,7 +60,7 @@ namespace Answer.API.Services
 
         public async Task<IEnumerable<AnswerOutput>> GetByQuestionId(int id)
         {
-            var answers = await _dbContext.Answers.Select(x => (AnswerOutput)x).ToListAsync();
+            var answers = await _dbContext.Answers.Where(x => x.QuestionId == id).Select(x => (AnswerOutput)x).ToListAsync();
 
             return answers;
         }

@@ -7,17 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("authenticated", policy =>
-        policy.RequireAuthenticatedUser());
-});
-
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 builder.AddEventBus();
 
+Console.WriteLine(builder.Configuration["QuestionsGrpc"]);
 builder.AddGrpcClient<QuestionsGrpcService.QuestionsGrpcServiceClient>(builder.Configuration["QuestionsGrpc"]);
 
 var app = builder.Build();

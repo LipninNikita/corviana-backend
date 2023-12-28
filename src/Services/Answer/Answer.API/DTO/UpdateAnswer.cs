@@ -3,7 +3,7 @@
     public class UpdateAnswer
     {
         public Guid Id { get; set; }
-        public int IdQuestion { get; set; }
+        public int QuestionId { get; set; }
         public string Content { get; set; }
         public bool IsRight { get; set; }
 
@@ -13,7 +13,7 @@
             result.Id = input.Id;
             result.Content = input.Content;
             result.IsRight = input.IsRight;
-            result.IdQuestion = input.IdQuestion;
+            result.QuestionId = input.QuestionId;
 
             return result;
         }
