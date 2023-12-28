@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Quest.BackgroundTasks.Services
 {
-    public interface IQuestsService
+    public interface IQuestsJobService
     {
-        public Task<bool> AddQuest()
+        public Task<bool> AddJob(Guid QuestId, DateTime dtEnd);
     }
 }

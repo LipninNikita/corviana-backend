@@ -20,7 +20,7 @@ namespace Quest.BackgroundTasks.Events.Handlers
 
         public async Task<bool> Handle(QuestCreatedEvent @event)
         {
-            IJobDetail job = JobBuilder.Create<CheckQuestOverdueJob>()
+            IJobDetail job = JobBuilder.Create<QuestOverdueJob>()
                 .WithIdentity(nameof(@event) + "Job" + Guid.NewGuid(), "CheckMembership")
                 .Build();
 

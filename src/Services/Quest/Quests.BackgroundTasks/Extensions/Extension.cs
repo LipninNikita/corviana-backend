@@ -9,9 +9,9 @@ namespace Quest.BackgroundTasks.Extensions
 {
     public static class Extension
     {
-        private static readonly List<string> HotQuestNames = new() { "You better hurry" };
-        private static readonly List<string> DailyQuestNames = new() { "It’s gonna be a long day" };
-        private static readonly List<string> WeeklyQuestNames = new() { "Plenty of time, but will you make it?" };
+        private static readonly List<string> HotQuestNames = new() { "Race Against Your Phone Battery", "Panic at the Last-Minute Shopping Spree", "Mission: FOMO Edition", "The Fast and the Curious Cats on TikTok", "Express Lane Adventure", "Turbo Boost Quest", "Swift Swag Sprint", "Rush Hour Rush", "Hasty Hilariousness", "Urgent Unicorn Selfie Safari" };
+        private static readonly List<string> DailyQuestNames = new() { "The Never-Ending Snapchat Streak", "The Perpetual Pizza Party", "Daily Dose of Drama", "Endless Emoji Endeavor", "Eternal TikTok Challenge", "Quirky Quest for the Ultimate Meme", "Unceasing Upside-down Challenge", "Infinite Instagram Story", "Constant Fortnite Conundrum", "The Legendary Late-night Taco Run" };
+        private static readonly List<string> WeeklyQuestNames = new() { "The Extended Netflix Binge", "Seven-day Sleepover", "The Prolonged Procrastination Party", "The Long-haul Twitch Stream", "Sustained Social Media Shenanigans", "Protracted Video Game Marathon", "Drawn-out DIY TikTok Projects", "Week-long Wacky YouTube Challenges", "The Never-ending Group Chat Banter", "The Lengthy Lollygagging LAN Party" };
 
         public static QuestData GenerateRandomQuest(int LifeTime, int Type)
         {
@@ -22,25 +22,20 @@ namespace Quest.BackgroundTasks.Extensions
             quest.Level = level;
             quest.TimesToFinish = new Random().Next(1 * (level + 1), 4 * (level + 1));
 
-            var rnd = new Random();
-            var randomName = "";
             if (Type == 0)
-            {
-                randomName = WeeklyQuestNames[rnd.Next(0, HotQuestNames.Count() - 1)];
-                quest.Name = randomName;
-            }
+                quest.Name = GetRandomName(WeeklyQuestNames);
             else if (Type == 1)
-            {
-                randomName = DailyQuestNames[rnd.Next(0, HotQuestNames.Count() - 1)];
-                quest.Name = randomName;
-            }
+                quest.Name = GetRandomName(DailyQuestNames);
             else if (Type == 2)
-            {
-                randomName = HotQuestNames[rnd.Next(0, HotQuestNames.Count() - 1)];
-                quest.Name = randomName;
-            }
+                quest.Name = GetRandomName(HotQuestNames);
 
             return quest;
+        }
+
+        private static string GetRandomName(List<string> arr)
+        {
+            var rnd = new Random();
+            return arr[rnd.Next(0, arr.Count() - 1)];
         }
     }
 }

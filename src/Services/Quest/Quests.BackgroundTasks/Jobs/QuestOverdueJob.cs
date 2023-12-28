@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Quest.BackgroundTasks.Jobs
 {
-    public class CheckQuestOverdueJob : IJob
+    public class QuestOverdueJob : IJob
     {
         public async Task Execute(IJobExecutionContext context)
         {
