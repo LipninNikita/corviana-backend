@@ -1,6 +1,7 @@
 ﻿using EventBusRabbitMq.Events;
 using Quartz;
 using Quest.BackgroundTasks.Events.Models;
+using Quest.BackgroundTasks.Jobs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

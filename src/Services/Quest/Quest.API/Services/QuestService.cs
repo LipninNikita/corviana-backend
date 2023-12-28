@@ -18,28 +18,15 @@ namespace Quest.API.Services
             _bus = bus;
         }
 
-        public async Task<Guid> Add(AddQuest input)
-        {
-            Data.Models.Quest model = input;
-            await _dbContext.Quests.AddAsync(model);
-            await _dbContext.SaveChangesAsync();
-
-            return model.Id;
-        }
-        public async Task<Guid> UpdateStatus(Guid id)
+        public async Task<Guid> UpdateStatus(Guid id, bool IsSuccess)
         {
             var quest = await _dbContext.Quests.SingleOrDefaultAsync(x => x.Id == id);
             quest.IsFinished = true;
+            quest.IsSucceed = IsSuccess;
 
             await _dbContext.SaveChangesAsync();
 
             return quest.Id;
-        }
-        public async Task<QuestCard> GetById(Guid id)
-        {
-            var result = await _dbContext.Quests.SingleOrDefaultAsync(x => x.Id == id);
-
-            return result;
         }
 
         public async Task<IEnumerable<QuestCard>> GetByUserId(string userId)
