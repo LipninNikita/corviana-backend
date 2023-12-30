@@ -25,8 +25,8 @@ namespace Point.API.Controllers
         }
 
         [HttpGet]
-        [Route("User")]
-        public async Task<IActionResult> GetCurrentUserPlace()
+        [Route("{userId}")]
+        public async Task<IActionResult> GetCurrentUserPlace(string? userId)
         {
             var result = await _pointTransactionService.GetUserPlace();
 

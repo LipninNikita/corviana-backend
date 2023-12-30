@@ -22,7 +22,7 @@ namespace EventBusRabbitMq
             _serviceProvider = serviceProvider;
         }
 
-        public void Publish<TEvent>(TEvent @event) where TEvent : Event
+        public Task Publish<TEvent>(TEvent @event) where TEvent : Event
         {
             var exchangeName = typeof(TEvent).Name;
             var message = JsonConvert.SerializeObject(@event);
@@ -32,6 +32,8 @@ namespace EventBusRabbitMq
 
             _channel.ExchangeDeclare(exchangeName, ExchangeType.Fanout);
             _channel.BasicPublish(exchangeName, "", null, body);
+
+            return Task.CompletedTask;
         }
 
         public void Subscribe<TEvent, TEventHandler>()

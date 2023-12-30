@@ -1,37 +1,28 @@
-﻿using EventBusRabbitMq.Events;
-using Quartz;
-using Quest.BackgroundTasks.Jobs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EventBusRabbitMq;
+using EventBusRabbitMq.Events;
+using Hangfire;
+using Quest.BackgroundTasks.Events.Models;
 
 namespace Quest.BackgroundTasks.Services
 {
     public class QuestsJobService : IQuestsJobService
     {
-        private readonly IScheduler _scheduler;
-
-        public QuestsJobService(IScheduler scheduler)
+        private readonly IEventBus _bus;
+        public QuestsJobService(IEventBus bus)
         {
-            _scheduler = scheduler;
+            _bus = bus;
         }
 
         public async Task<bool> AddJob(Guid QuestId, DateTime dtEnd)
         {
-            IJobDetail job = JobBuilder.Create<QuestOverdueJob>()
-             .WithIdentity(nameof(QuestOverdueJob)+ Guid.NewGuid(), "CheckMembership")
-             .Build();
-            ITrigger trigger = TriggerBuilder.Create()
-                .WithIdentity(nameof(QuestOverdueJob) + "Trigger" + Guid.NewGuid(), "CheckMembership")
-                .StartAt(dtEnd)
-                .UsingJobData("questId", QuestId)
-            .Build();
-
-            await _scheduler.ScheduleJob(job, trigger);
+            BackgroundJob.Schedule(() => PublishQuestOverdueEvent(QuestId), dtEnd);
 
             return true;
+        }
+
+        private async Task PublishQuestOverdueEvent(Guid QuestId)
+        {
+            await _bus.Publish(new QuestOverdueEvent() { QuestId = QuestId });
         }
     }
 }

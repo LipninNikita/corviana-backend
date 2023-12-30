@@ -1,8 +1,8 @@
 ﻿using EventBusRabbitMq;
+using Hangfire;
+using Hangfire.MemoryStorage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Quartz;
-using Quartz.Impl;
 using Quest.BackgroundTasks.Events.Handlers;
 using Quest.BackgroundTasks.Events.Models;
 using Quests.BackgroundTasks;
@@ -14,21 +14,13 @@ class Program
         IHost host = Host.CreateDefaultBuilder(args)
                    .ConfigureServices(async (context, services) =>
                    {
-                       ISchedulerFactory schedulerFactory = new StdSchedulerFactory();
-                       IScheduler scheduler = await schedulerFactory.GetScheduler();
-
-                       services.AddSingleton(scheduler);
+                       GlobalConfiguration.Configuration.UseMemoryStorage();
 
                        services.AddEventBus(context.Configuration["RabbitMQ"]);
 
-                       await scheduler.Start();
-
                        var provider = services.BuildServiceProvider();
                        var bus = provider.GetRequiredService<IEventBus>();
-                       scheduler.Context.Put("bus", bus);
-
-                       services.AddTransient<QuestCreatedEventHandler>();
-                       bus.Subscribe<QuestCreatedEvent, QuestCreatedEventHandler>();
+                       bus.Subscribe<UserCreatedEvent, UserCreatedEventHandler>();
                    })
                    .Build();
 
